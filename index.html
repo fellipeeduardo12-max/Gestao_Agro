@@ -1,0 +1,1728 @@
+<style>
+  :root {
+    --bg: #f2f1e8;
+    --surface: #ffffff;
+    --surface-2: #ebe9dc;
+    --border: #d9d5c2;
+    --text: #23261e;
+    --text-2: #5c6151;
+    --text-3: #8a8f7a;
+    --accent: #4d6a34;
+    --accent-ink: #ffffff;
+    --accent-soft: #dde8cd;
+    --terra: #a85a2a;
+    --terra-soft: #f0ddc9;
+    --danger: #a13b3b;
+    --danger-soft: #f2dbdb;
+    --st-prospeccao: #4c6b8a;
+    --st-prospeccao-soft: #dbe4ec;
+    --st-visita: #a3791f;
+    --st-visita-soft: #eee4c9;
+    --st-negociacao: #7a5ca8;
+    --st-negociacao-soft: #e6ddf0;
+    --st-cliente: #3f7d45;
+    --st-cliente-soft: #dcebdc;
+    --st-inviavel: #a13b3b;
+    --st-inviavel-soft: #f2dbdb;
+    --shadow: 0 1px 2px rgba(30, 32, 20, 0.06), 0 8px 24px -12px rgba(30, 32, 20, 0.18);
+    --radius: 14px;
+    --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #13160f;
+      --surface: #1c2016;
+      --surface-2: #242a1c;
+      --border: #383f2c;
+      --text: #ece9da;
+      --text-2: #aeb39c;
+      --text-3: #7d8270;
+      --accent: #8fb35f;
+      --accent-ink: #12160b;
+      --accent-soft: #2a3320;
+      --terra: #e3985e;
+      --terra-soft: #3a2a1a;
+      --danger: #e07a7a;
+      --danger-soft: #3a2222;
+      --st-prospeccao: #8fb0d6;
+      --st-prospeccao-soft: #22303f;
+      --st-visita: #e0bd6a;
+      --st-visita-soft: #3b3218;
+      --st-negociacao: #c3aee0;
+      --st-negociacao-soft: #332a42;
+      --st-cliente: #8fd196;
+      --st-cliente-soft: #223a26;
+      --st-inviavel: #e07a7a;
+      --st-inviavel-soft: #3a2222;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #13160f;
+    --surface: #1c2016;
+    --surface-2: #242a1c;
+    --border: #383f2c;
+    --text: #ece9da;
+    --text-2: #aeb39c;
+    --text-3: #7d8270;
+    --accent: #8fb35f;
+    --accent-ink: #12160b;
+    --accent-soft: #2a3320;
+    --terra: #e3985e;
+    --terra-soft: #3a2a1a;
+    --danger: #e07a7a;
+    --danger-soft: #3a2222;
+    --st-prospeccao: #8fb0d6;
+    --st-prospeccao-soft: #22303f;
+    --st-visita: #e0bd6a;
+    --st-visita-soft: #3b3218;
+    --st-negociacao: #c3aee0;
+    --st-negociacao-soft: #332a42;
+    --st-cliente: #8fd196;
+    --st-cliente-soft: #223a26;
+    --st-inviavel: #e07a7a;
+    --st-inviavel-soft: #3a2222;
+    color-scheme: dark;
+  }
+  :root[data-theme="light"] {
+    --bg: #f2f1e8;
+    --surface: #ffffff;
+    --surface-2: #ebe9dc;
+    --border: #d9d5c2;
+    --text: #23261e;
+    --text-2: #5c6151;
+    --text-3: #8a8f7a;
+    --accent: #4d6a34;
+    --accent-ink: #ffffff;
+    --accent-soft: #dde8cd;
+    --terra: #a85a2a;
+    --terra-soft: #f0ddc9;
+    --danger: #a13b3b;
+    --danger-soft: #f2dbdb;
+    --st-prospeccao: #4c6b8a;
+    --st-prospeccao-soft: #dbe4ec;
+    --st-visita: #a3791f;
+    --st-visita-soft: #eee4c9;
+    --st-negociacao: #7a5ca8;
+    --st-negociacao-soft: #e6ddf0;
+    --st-cliente: #3f7d45;
+    --st-cliente-soft: #dcebdc;
+    --st-inviavel: #a13b3b;
+    --st-inviavel-soft: #f2dbdb;
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  button, input, select, textarea { font-family: inherit; color: inherit; }
+  button { cursor: pointer; }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  .app {
+    max-width: 560px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    position: relative;
+  }
+
+  /* Top bar */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .app-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 16px 18px 6px;
+  }
+  .app-brand .brand-leaf {
+    font-size: 1.5rem;
+    line-height: 1;
+    transform: translateY(1px) rotate(-8deg);
+  }
+  .app-brand .brand-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+  }
+  .app-brand .brand-eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .app-brand .brand-name {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1.7rem;
+    letter-spacing: 0.01em;
+    color: var(--accent);
+    margin-top: 1px;
+  }
+  .topbar-inner {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 4px 18px 12px;
+  }
+  .topbar-inner h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.01em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .topbar-actions { display: flex; gap: 6px; }
+  .icon-btn {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-2);
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .icon-btn:hover { background: var(--surface-2); color: var(--text); }
+  .icon-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .search-bar { padding: 0 18px 14px; }
+  .search-bar input {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+  .search-bar input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 0 18px 14px;
+  }
+  .filter-row[hidden] { display: none; }
+  .filter-chip {
+    flex: none;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-2);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+  .filter-chip[data-active="true"] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  /* Main content */
+  main {
+    flex: 1;
+    padding: 6px 18px 100px;
+  }
+
+  /* Dashboard */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 10px 0 22px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+  }
+  .stat-card .label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-3);
+  }
+  .stat-card .value {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .stat-card .sub {
+    font-size: 0.72rem;
+    color: var(--text-3);
+    margin-top: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .stat-card-action {
+    text-align: left;
+    width: 100%;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .stat-card-action:hover { border-color: var(--accent); }
+  .stat-card-action:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .stat-card-action .label { display: flex; align-items: center; justify-content: space-between; }
+  .stat-card-chevron { color: var(--accent); font-size: 0.95rem; }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 22px 0 10px;
+  }
+
+  .check-list { display: flex; flex-direction: column; gap: 2px; margin-bottom: 4px; }
+  .check-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 2px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.92rem;
+  }
+  .check-row:last-child { border-bottom: none; }
+  .check-row-left { display: flex; align-items: center; gap: 10px; }
+  .check-row input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--accent); }
+  .status-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+
+  .empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--text-3);
+  }
+  .empty-state .emoji { font-size: 2rem; display: block; margin-bottom: 10px; }
+  .empty-state p { margin: 4px 0; font-size: 0.9rem; }
+
+  /* Cards (list items) */
+  .card-list { display: flex; flex-direction: column; gap: 10px; }
+  .item-card {
+    display: flex;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    text-align: left;
+    width: 100%;
+    padding: 0;
+  }
+  .item-card .stripe { width: 5px; flex: none; }
+  .item-card .body { padding: 12px 14px; flex: 1; min-width: 0; }
+  .item-card .top-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .item-card .name {
+    font-weight: 600;
+    font-size: 0.98rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .chip {
+    flex: none;
+    font-size: 0.68rem;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .item-card .meta {
+    margin-top: 4px;
+    font-size: 0.82rem;
+    color: var(--text-2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+  }
+  .item-card .meta span { white-space: nowrap; }
+  .priority-flag { color: var(--terra); font-weight: 700; }
+
+  /* Agenda */
+  .agenda-card {
+    display: flex;
+    align-items: stretch;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .agenda-check {
+    flex: none;
+    width: 46px;
+    border: none;
+    border-right: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--accent);
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+  .agenda-check.checked { background: var(--st-cliente-soft); color: var(--st-cliente); }
+  .agenda-body {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: none;
+    text-align: left;
+    padding: 12px 14px;
+  }
+  .agenda-title { font-weight: 600; font-size: 0.98rem; }
+  .agenda-title.done { text-decoration: line-through; color: var(--text-3); }
+  .agenda-body .meta {
+    margin-top: 4px;
+    font-size: 0.82rem;
+    color: var(--text-2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+  }
+  .agenda-body .meta span { white-space: nowrap; }
+
+  /* FAB */
+  .fab {
+    position: fixed;
+    right: calc(50% - 280px + 18px);
+    bottom: 88px;
+    height: 52px;
+    padding: 0 20px 0 16px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border: none;
+    box-shadow: 0 2px 4px rgba(20, 22, 12, 0.12), 0 10px 24px -8px rgba(20, 22, 12, 0.35);
+    z-index: 25;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .fab:hover { box-shadow: 0 4px 8px rgba(20, 22, 12, 0.16), 0 14px 28px -8px rgba(20, 22, 12, 0.4); }
+  .fab:active { transform: scale(0.96); }
+  .fab:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .fab-icon {
+    width: 22px;
+    height: 22px;
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .fab-icon svg { width: 100%; height: 100%; }
+  .fab-label { white-space: nowrap; }
+  @media (max-width: 559px) {
+    .fab { right: 18px; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .fab { animation: fab-in 0.22s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  }
+  @keyframes fab-in {
+    from { opacity: 0; transform: translateY(8px) scale(0.94); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Tab bar */
+  .tabbar {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    display: flex;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+  }
+  .tab {
+    flex: 1;
+    border: none;
+    background: none;
+    padding: 8px 4px;
+    border-radius: 10px;
+    font-size: 0.72rem;
+    color: var(--text-3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+  .tab .tab-icon { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+  .tab .tab-icon svg { width: 100%; height: 100%; }
+  .tab[data-active="true"] { color: var(--accent); background: var(--accent-soft); }
+
+  /* Bottom sheet */
+  .sheet-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 17, 10, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 30;
+  }
+  .sheet-overlay[data-open="true"] { opacity: 1; pointer-events: auto; }
+
+  .sheet {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 100%);
+    width: 100%;
+    max-width: 560px;
+    max-height: 88vh;
+    background: var(--surface);
+    border-radius: 20px 20px 0 0;
+    box-shadow: var(--shadow);
+    z-index: 31;
+    transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+  }
+  .sheet[data-open="true"] { transform: translate(-50%, 0); }
+  .sheet-handle {
+    width: 40px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 999px;
+    margin: 10px auto 0;
+    flex: none;
+  }
+  #sheetContent { overflow-y: auto; padding: 16px 20px calc(24px + env(safe-area-inset-bottom, 0px)); }
+
+  .sheet-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 4px 0 16px;
+  }
+  .field { margin-bottom: 14px; }
+  .field label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-3);
+    margin-bottom: 5px;
+  }
+  .field input, .field select, .field textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+  .field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+  .field textarea { resize: vertical; min-height: 64px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    padding: 11px 16px;
+    border-radius: 10px;
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+  .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .btn-danger { background: var(--danger-soft); border-color: var(--danger-soft); color: var(--danger); }
+  .btn-maps { background: var(--st-prospeccao-soft); border-color: var(--st-prospeccao-soft); color: var(--st-prospeccao); }
+  .btn-whatsapp { background: var(--st-cliente-soft); border-color: var(--st-cliente-soft); color: var(--st-cliente); }
+  .btn-block { width: 100%; }
+  .btn-row { display: flex; gap: 10px; margin-top: 20px; }
+  .quick-actions { margin-top: 14px; }
+  .btn[href] { text-decoration: none; }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .detail-grid { display: flex; flex-direction: column; gap: 10px; margin: 14px 0 20px; }
+  .detail-row { display: flex; justify-content: space-between; gap: 12px; font-size: 0.9rem; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .detail-row .k { color: var(--text-3); }
+  .detail-row .v { text-align: right; font-weight: 500; }
+  .obs-block { background: var(--surface-2); border-radius: 10px; padding: 12px; font-size: 0.88rem; color: var(--text-2); margin-top: 4px; white-space: pre-wrap; }
+
+  .about-block { font-size: 0.85rem; color: var(--text-2); line-height: 1.55; }
+  .about-block strong { color: var(--text); }
+
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 96px;
+    transform: translate(-50%, 12px);
+    max-width: calc(100% - 36px);
+    background: var(--text);
+    color: var(--bg);
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 40;
+  }
+  .toast[data-show="true"] { opacity: 1; transform: translate(-50%, 0); }
+</style>
+
+<div class="app">
+  <header class="topbar">
+    <div class="app-brand">
+      <span class="brand-leaf" aria-hidden="true">🌱</span>
+      <div class="brand-text">
+        <span class="brand-eyebrow">Gestão</span>
+        <span class="brand-name">Agro</span>
+      </div>
+    </div>
+    <div class="topbar-inner">
+      <h1 id="pageTitle">Painel</h1>
+      <div class="topbar-actions">
+        <button class="icon-btn" id="searchToggleBtn" title="Buscar" aria-label="Buscar">⌕</button>
+        <button class="icon-btn" id="menuBtn" title="Backup e ajuda" aria-label="Backup e ajuda">⋯</button>
+      </div>
+    </div>
+    <div class="search-bar" id="searchBar" hidden>
+      <input type="search" id="searchInput" placeholder="Buscar fazenda, produtor, contato, cultura...">
+    </div>
+    <div class="filter-row" id="filterRow" hidden></div>
+  </header>
+
+  <main id="view"></main>
+
+  <button class="fab" id="fabAdd">
+    <span class="fab-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+    </span>
+    <span class="fab-label" id="fabLabel">Adicionar</span>
+  </button>
+
+  <nav class="tabbar">
+    <button class="tab" data-tab="painel">
+      <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg></span>
+      Painel
+    </button>
+    <button class="tab" data-tab="prospeccoes">
+      <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.4-7-11.5a7 7 0 0 1 14 0C19 14.6 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg></span>
+      Clientes
+    </button>
+    <button class="tab" data-tab="agendas">
+      <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17"/></svg></span>
+      Agenda
+    </button>
+    <button class="tab" data-tab="consultores">
+      <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.4-4 4.2-6 7.5-6s6.1 2 7.5 6"/></svg></span>
+      Consultores
+    </button>
+  </nav>
+
+  <div class="sheet-overlay" id="sheetOverlay"></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true">
+    <div class="sheet-handle"></div>
+    <div id="sheetContent"></div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <input type="file" id="importInput" accept="application/json" hidden>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var STORAGE_KEY = "agro_pipeline_v1";
+
+  var CULTURAS = ["ALGODÃO","ARROZ","BANANA","CAFÉ","CEBOLA","CEREAIS","CITROS","FEIJÃO I","FEIJÃO II","FEIJÃO III","HF","MELÃO","MILHO I","MILHO II","SOJA","TABACO","TOMATE","TRIGO"];
+  var PRODUTOS = ["Openeem Plus", "Openeem Flex"];
+  var STATUS_LIST = ["Prospecção", "Visita Técnica Feita", "Negociação", "Cliente", "Inviável"];
+  var STATUS_KEY = { "Prospecção":"prospeccao", "Visita Técnica Feita":"visita", "Negociação":"negociacao", "Cliente":"cliente", "Inviável":"inviavel" };
+  var PRIORIDADES = ["1", "2", "Não Priorizado"];
+
+  var seedProspects = [
+    { id: uid(), fazenda: "LAÇADOR", municipio: "VARJÃO DE MINAS", estado: "", nomeContato: "BATISTA", cargoContato: "GERENTE", telefone: "(38) 9 9880-0257", email: "", gps: "18.318167,45.995449", status: "Prospecção", cultura: "CEREAIS", produto: "", mes: "", areaTotal: "", areaIrrigada: "", areaTeste: "", volume: "", prioridade: "Não Priorizado", obs: "Gerente da fazenda Laçador", links: "" },
+    { id: uid(), fazenda: "LAÇADOR", municipio: "VARJÃO DE MINAS", estado: "", nomeContato: "RONE", cargoContato: "AGRÔNOMO", telefone: "(38) 9 9959-2008", email: "", gps: "18.318167,45.995449", status: "Prospecção", cultura: "CEREAIS", produto: "", mes: "", areaTotal: "", areaIrrigada: "", areaTeste: "", volume: "", prioridade: "Não Priorizado", obs: "Agrônomo da fazenda Laçador", links: "" },
+    { id: uid(), fazenda: "FARROUPILHA", municipio: "VARJÃO DE MINAS", estado: "", nomeContato: "VANDERLEY", cargoContato: "GERENTE", telefone: "(34) 9 9975-4452", email: "", gps: "", status: "Prospecção", cultura: "CEREAIS", produto: "", mes: "", areaTotal: "", areaIrrigada: "", areaTeste: "", volume: "", prioridade: "Não Priorizado", obs: "", links: "" },
+    { id: uid(), fazenda: "FARROUPILHA", municipio: "VARJÃO DE MINAS", estado: "", nomeContato: "IVANILDO", cargoContato: "AGRÔNOMO", telefone: "(38) 9 9893-9843", email: "", gps: "", status: "Prospecção", cultura: "CEREAIS", produto: "", mes: "", areaTotal: "", areaIrrigada: "", areaTeste: "", volume: "", prioridade: "Não Priorizado", obs: "", links: "" },
+    { id: uid(), fazenda: "CONFUSÃO", municipio: "LEAL", estado: "", nomeContato: "MARCEL JUNIOR", cargoContato: "FILHO DO DONO", telefone: "(34) 9 9831-3883", email: "", gps: "18.577530,46.246029", status: "Prospecção", cultura: "CEREAIS", produto: "", mes: "", areaTotal: "", areaIrrigada: "", areaTeste: "", volume: "", prioridade: "Não Priorizado", obs: "", links: "" },
+    { id: uid(), fazenda: "PRATA", municipio: "LEAL", estado: "", nomeContato: "JAIME", cargoContato: "GERENTE", telefone: "(34) 9 9793-3717", email: "", gps: "", status: "Prospecção", cultura: "CAFÉ", produto: "", mes: "", areaTotal: "", areaIrrigada: "", areaTeste: "", volume: "", prioridade: "Não Priorizado", obs: "", links: "" }
+  ];
+
+  function uid() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return "id-" + Date.now() + "-" + Math.random().toString(16).slice(2);
+  }
+
+  function loadState() {
+    var data = null;
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) data = JSON.parse(raw);
+    } catch (e) {}
+    if (!data) data = { prospects: seedProspects, consultores: [] };
+    if (!Array.isArray(data.painelStatusFilter)) data.painelStatusFilter = STATUS_LIST.slice();
+    if (!Array.isArray(data.agendas)) data.agendas = [];
+    return data;
+  }
+
+  function saveState() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  var state = loadState();
+
+  var ui = {
+    tab: "painel",
+    search: "",
+    statusFilter: "todos",
+    sheetMode: null,   // 'add-prospect' | 'edit-prospect' | 'view-prospect' | 'add-consultor' | 'edit-consultor' | 'menu'
+    editingId: null
+  };
+
+  var el = {
+    pageTitle: document.getElementById("pageTitle"),
+    view: document.getElementById("view"),
+    fab: document.getElementById("fabAdd"),
+    fabLabel: document.getElementById("fabLabel"),
+    tabbar: document.querySelector(".tabbar"),
+    searchToggleBtn: document.getElementById("searchToggleBtn"),
+    menuBtn: document.getElementById("menuBtn"),
+    searchBar: document.getElementById("searchBar"),
+    searchInput: document.getElementById("searchInput"),
+    filterRow: document.getElementById("filterRow"),
+    sheetOverlay: document.getElementById("sheetOverlay"),
+    sheet: document.getElementById("sheet"),
+    sheetContent: document.getElementById("sheetContent"),
+    importInput: document.getElementById("importInput"),
+    toast: document.getElementById("toast")
+  };
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function fmtNum(v) {
+    var n = parseFloat(v);
+    if (isNaN(n)) return "0";
+    return n.toLocaleString("pt-BR");
+  }
+
+  function gmapsUrl(gps) {
+    var coords = String(gps || "").replace(/\s+/g, "");
+    if (!coords) return null;
+    return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(coords);
+  }
+
+  function whatsappUrl(phone) {
+    var digits = String(phone || "").replace(/\D+/g, "");
+    if (!digits) return null;
+    if (digits.length <= 11) digits = "55" + digits;
+    return "https://wa.me/" + digits;
+  }
+
+  function quickActionsHtml(gps, telefone) {
+    var maps = gmapsUrl(gps);
+    var wa = whatsappUrl(telefone);
+    if (!maps && !wa) return "";
+    var html = '<div class="btn-row quick-actions">';
+    if (maps) html += '<a class="btn btn-maps" href="' + esc(maps) + '" target="_blank" rel="noopener">🗺️ Ver no Maps</a>';
+    if (wa) html += '<a class="btn btn-whatsapp" href="' + esc(wa) + '" target="_blank" rel="noopener">💬 WhatsApp</a>';
+    html += "</div>";
+    return html;
+  }
+
+  function pad2(n) { return n < 10 ? "0" + n : String(n); }
+
+  function gcalStamp(d) {
+    return d.getFullYear() + pad2(d.getMonth() + 1) + pad2(d.getDate()) + "T" + pad2(d.getHours()) + pad2(d.getMinutes()) + "00";
+  }
+
+  function gcalDateOnly(d) {
+    return d.getFullYear() + pad2(d.getMonth() + 1) + pad2(d.getDate());
+  }
+
+  function gcalUrl(item) {
+    if (!item.data) return null;
+    var dates;
+    if (item.hora) {
+      var start = new Date(item.data + "T" + item.hora + ":00");
+      var end = new Date(start.getTime() + 60 * 60 * 1000);
+      dates = gcalStamp(start) + "/" + gcalStamp(end);
+    } else {
+      var startDay = new Date(item.data + "T00:00:00");
+      var endDay = new Date(startDay.getTime() + 24 * 60 * 60 * 1000);
+      dates = gcalDateOnly(startDay) + "/" + gcalDateOnly(endDay);
+    }
+    var params = [
+      "action=TEMPLATE",
+      "text=" + encodeURIComponent(item.titulo || "Compromisso"),
+      "dates=" + dates,
+      "details=" + encodeURIComponent(item.obs || "")
+    ];
+    return "https://calendar.google.com/calendar/render?" + params.join("&");
+  }
+
+  // ---------- Navigation ----------
+  el.tabbar.addEventListener("click", function (e) {
+    var btn = e.target.closest(".tab");
+    if (!btn) return;
+    ui.tab = btn.dataset.tab;
+    ui.search = "";
+    el.searchInput.value = "";
+    el.searchBar.hidden = true;
+    render();
+  });
+
+  el.searchToggleBtn.addEventListener("click", function () {
+    el.searchBar.hidden = !el.searchBar.hidden;
+    if (!el.searchBar.hidden) el.searchInput.focus();
+  });
+
+  el.searchInput.addEventListener("input", function () {
+    ui.search = el.searchInput.value.trim().toLowerCase();
+    renderView();
+  });
+
+  el.menuBtn.addEventListener("click", openMenuSheet);
+
+  function openAddForCurrentTab() {
+    if (ui.tab === "consultores") openConsultorForm(null);
+    else if (ui.tab === "agendas") openAgendaForm(null);
+    else openProspectForm(null);
+  }
+
+  el.fab.addEventListener("click", openAddForCurrentTab);
+
+  // ---------- Render root ----------
+  var FAB_LABELS = { prospeccoes: "Novo cliente", consultores: "Novo consultor", agendas: "Novo compromisso" };
+
+  function render() {
+    var titles = { painel: "Painel", prospeccoes: "Clientes", consultores: "Consultores", agendas: "Agenda" };
+    el.pageTitle.textContent = titles[ui.tab];
+    Array.prototype.forEach.call(el.tabbar.querySelectorAll(".tab"), function (b) {
+      b.dataset.active = String(b.dataset.tab === ui.tab);
+    });
+    el.fab.style.display = ui.tab === "painel" ? "none" : "flex";
+    if (FAB_LABELS[ui.tab]) {
+      el.fabLabel.textContent = FAB_LABELS[ui.tab];
+      el.fab.setAttribute("aria-label", "Adicionar " + FAB_LABELS[ui.tab].toLowerCase());
+    }
+    el.filterRow.hidden = ui.tab !== "prospeccoes";
+    if (ui.tab === "prospeccoes") renderFilterRow();
+    renderView();
+  }
+
+  function renderFilterRow() {
+    var options = ["todos"].concat(STATUS_LIST);
+    el.filterRow.innerHTML = options.map(function (s) {
+      var label = s === "todos" ? "Todos" : s;
+      return '<button class="filter-chip" data-status="' + esc(s) + '" data-active="' + (ui.statusFilter === s) + '">' + esc(label) + "</button>";
+    }).join("");
+    Array.prototype.forEach.call(el.filterRow.querySelectorAll(".filter-chip"), function (chip) {
+      chip.addEventListener("click", function () {
+        ui.statusFilter = chip.dataset.status;
+        renderFilterRow();
+        renderView();
+      });
+    });
+  }
+
+  function renderView() {
+    if (ui.tab === "painel") return renderPainel();
+    if (ui.tab === "prospeccoes") return renderProspeccoes();
+    if (ui.tab === "agendas") return renderAgendas();
+    if (ui.tab === "consultores") return renderConsultores();
+  }
+
+  // ---------- Painel ----------
+  function startOfWeek(date) {
+    var d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+    var day = d.getDay();
+    var diff = day === 0 ? -6 : 1 - day;
+    d.setDate(d.getDate() + diff);
+    return d;
+  }
+
+  function endOfWeek(date) {
+    var s = startOfWeek(date);
+    var e = new Date(s);
+    e.setDate(e.getDate() + 6);
+    e.setHours(23, 59, 59, 999);
+    return e;
+  }
+
+  function agendasDaSemana() {
+    var start = startOfWeek(new Date());
+    var end = endOfWeek(new Date());
+    return state.agendas.filter(function (a) {
+      if (a.concluido || !a.data) return false;
+      var d = new Date(a.data + "T00:00:00");
+      return d >= start && d <= end;
+    });
+  }
+
+  function renderPainel() {
+    var p = state.prospects;
+    var totalArea = p.reduce(function (s, r) { return s + (parseFloat(r.areaTotal) || 0); }, 0);
+    var totalVolume = p.reduce(function (s, r) { return s + (parseFloat(r.volume) || 0); }, 0);
+    var prioridade1 = p.filter(function (r) { return r.prioridade === "1"; });
+    var prioridade2 = p.filter(function (r) { return r.prioridade === "2"; });
+    var agendaSemana = sortAgendas(agendasDaSemana());
+
+    var filter = state.painelStatusFilter;
+    var filteredCount = p.filter(function (r) { return filter.indexOf(r.status) !== -1; }).length;
+    var subLabel = filter.length === STATUS_LIST.length ? "Todos os status" : (filter.length ? filter.join(", ") : "Nenhum status selecionado");
+
+    var html = '';
+    html += '<div class="stat-grid">';
+    html += statCardAction("Clientes", filteredCount, subLabel);
+    html += statCard("Consultores", state.consultores.length);
+    html += statCard("Área total (ha)", fmtNum(totalArea));
+    html += statCard("Volume esperado (L)", fmtNum(totalVolume));
+    html += "</div>";
+
+    if (prioridade1.length) {
+      html += '<div class="section-title">Prioridade 1</div>';
+      html += '<div class="card-list">' + prioridade1.map(prospectCardHtml).join("") + "</div>";
+    }
+    if (prioridade2.length) {
+      html += '<div class="section-title">Prioridade 2</div>';
+      html += '<div class="card-list">' + prioridade2.map(prospectCardHtml).join("") + "</div>";
+    }
+
+    html += '<div class="section-title">Agenda da semana</div>';
+    if (agendaSemana.length) {
+      html += '<div class="card-list">' + agendaSemana.map(agendaCardHtml).join("") + "</div>";
+    } else {
+      html += emptyState("🗓️", "Nada agendado nesta semana", "Compromissos pendentes de segunda a domingo aparecem aqui.");
+    }
+
+    el.view.innerHTML = html;
+    bindProspectCards();
+    bindAgendaCards();
+    var statusCard = document.getElementById("statusFilterCard");
+    if (statusCard) statusCard.addEventListener("click", openStatusFilterSheet);
+  }
+
+  function statCard(label, value) {
+    return '<div class="stat-card"><div class="label">' + esc(label) + '</div><div class="value">' + esc(value) + "</div></div>";
+  }
+
+  function statCardAction(label, value, sub) {
+    return (
+      '<button class="stat-card stat-card-action" id="statusFilterCard">' +
+      '<div class="label">' + esc(label) + '<span class="stat-card-chevron">›</span></div>' +
+      '<div class="value">' + esc(value) + "</div>" +
+      '<div class="sub">' + esc(sub) + "</div>" +
+      "</button>"
+    );
+  }
+
+  function openStatusFilterSheet() {
+    var current = state.painelStatusFilter;
+    var html = '<div class="sheet-title">Escolher status</div>';
+    html += '<div class="about-block" style="margin-bottom:14px;">Marque quais status devem entrar na contagem de "Clientes" do Painel.</div>';
+    html += '<div class="check-list">';
+    STATUS_LIST.forEach(function (s, i) {
+      var key = STATUS_KEY[s];
+      var checked = current.indexOf(s) !== -1;
+      html += '<label class="check-row">' +
+        '<span class="check-row-left"><span class="status-dot" style="background:var(--st-' + key + ')"></span>' + esc(s) + "</span>" +
+        '<input type="checkbox" data-status="' + esc(s) + '"' + (checked ? " checked" : "") + ">" +
+        "</label>";
+    });
+    html += "</div>";
+    html += '<div class="btn-row"><button class="btn btn-block" id="selectAllBtn">Selecionar todos</button><button class="btn btn-block" id="clearAllBtn">Limpar</button></div>';
+    html += '<div class="btn-row"><button class="btn btn-primary btn-block" id="applyFilterBtn">Aplicar</button></div>';
+
+    el.sheetContent.innerHTML = html;
+    var checkboxes = el.sheetContent.querySelectorAll('input[type="checkbox"]');
+    document.getElementById("selectAllBtn").addEventListener("click", function () {
+      Array.prototype.forEach.call(checkboxes, function (cb) { cb.checked = true; });
+    });
+    document.getElementById("clearAllBtn").addEventListener("click", function () {
+      Array.prototype.forEach.call(checkboxes, function (cb) { cb.checked = false; });
+    });
+    document.getElementById("applyFilterBtn").addEventListener("click", function () {
+      var selected = [];
+      Array.prototype.forEach.call(checkboxes, function (cb) {
+        if (cb.checked) selected.push(cb.dataset.status);
+      });
+      state.painelStatusFilter = selected;
+      saveState();
+      closeSheet();
+      renderPainel();
+    });
+    openSheet();
+  }
+
+  // ---------- Prospecções ----------
+  function filteredProspects() {
+    return state.prospects.filter(function (r) {
+      if (ui.statusFilter !== "todos" && r.status !== ui.statusFilter) return false;
+      if (!ui.search) return true;
+      var hay = [r.fazenda, r.nomeContato, r.municipio, r.cultura, r.telefone].join(" ").toLowerCase();
+      return hay.indexOf(ui.search) !== -1;
+    });
+  }
+
+  function renderProspeccoes() {
+    var list = filteredProspects();
+    if (!list.length) {
+      el.view.innerHTML = emptyState("🌾", "Nenhum cliente encontrado", "Cadastre uma fazenda ou contato para começar.", "＋ Novo cliente");
+      bindEmptyStateButton();
+      return;
+    }
+    el.view.innerHTML = '<div class="card-list">' + list.map(prospectCardHtml).join("") + "</div>";
+    bindProspectCards();
+  }
+
+  function prospectCardHtml(r) {
+    var key = STATUS_KEY[r.status] || "prospeccao";
+    var meta = [];
+    if (r.municipio) meta.push("📍 " + esc(r.municipio));
+    if (r.cultura) meta.push(esc(r.cultura));
+    var prioFlag = r.prioridade === "1" ? '<span class="priority-flag">★</span>' : "";
+    return (
+      '<button class="item-card" data-id="' + r.id + '">' +
+      '<div class="stripe" style="background:var(--st-' + key + ')"></div>' +
+      '<div class="body">' +
+      '<div class="top-line"><span class="name">' + prioFlag + esc(r.fazenda || r.nomeContato || "(sem nome)") + "</span>" +
+      '<span class="chip" style="background:var(--st-' + key + "-soft);color:var(--st-" + key + ')">' + esc(r.status) + "</span>" +
+      "</div>" +
+      '<div class="meta">' + meta.map(function (m) { return "<span>" + m + "</span>"; }).join("") + "</div>" +
+      "</div></button>"
+    );
+  }
+
+  function bindProspectCards() {
+    Array.prototype.forEach.call(el.view.querySelectorAll(".item-card[data-id]"), function (card) {
+      card.addEventListener("click", function () {
+        var rec = state.prospects.find(function (r) { return r.id === card.dataset.id; });
+        if (rec) openProspectDetail(rec);
+      });
+    });
+  }
+
+  function emptyState(emoji, title, sub, actionLabel) {
+    var html = '<div class="empty-state"><span class="emoji">' + emoji + "</span><p><strong>" + esc(title) + "</strong></p><p>" + esc(sub) + "</p>";
+    if (actionLabel) {
+      html += '<button class="btn btn-primary" id="emptyAddBtn" style="margin-top:14px;">' + esc(actionLabel) + "</button>";
+    }
+    html += "</div>";
+    return html;
+  }
+
+  function bindEmptyStateButton() {
+    var btn = document.getElementById("emptyAddBtn");
+    if (btn) btn.addEventListener("click", openAddForCurrentTab);
+  }
+
+  // ---------- Agenda ----------
+  function findProspectById(id) {
+    return state.prospects.find(function (p) { return p.id === id; });
+  }
+
+  function fmtAgendaDate(dateStr, timeStr) {
+    if (!dateStr) return "";
+    var parts = dateStr.split("-");
+    var out = parts[2] + "/" + parts[1] + "/" + parts[0];
+    if (timeStr) out += " às " + timeStr;
+    return out;
+  }
+
+  function filteredAgendas() {
+    return state.agendas.filter(function (a) {
+      if (!ui.search) return true;
+      var hay = [a.titulo, a.obs].join(" ").toLowerCase();
+      return hay.indexOf(ui.search) !== -1;
+    });
+  }
+
+  function sortAgendas(list) {
+    return list.slice().sort(function (a, b) {
+      var ka = (a.data || "9999") + "T" + (a.hora || "00:00");
+      var kb = (b.data || "9999") + "T" + (b.hora || "00:00");
+      return ka < kb ? -1 : ka > kb ? 1 : 0;
+    });
+  }
+
+  function renderAgendas() {
+    var list = filteredAgendas();
+    if (!list.length) {
+      el.view.innerHTML = emptyState("🗓️", "Nenhum compromisso agendado", "Marque uma visita, ligação ou reunião.", "＋ Novo compromisso");
+      bindEmptyStateButton();
+      return;
+    }
+    var pending = sortAgendas(list.filter(function (a) { return !a.concluido; }));
+    var done = sortAgendas(list.filter(function (a) { return a.concluido; }));
+
+    var html = "";
+    if (pending.length) {
+      html += '<div class="card-list">' + pending.map(agendaCardHtml).join("") + "</div>";
+    } else {
+      html += emptyState("✅", "Nenhum compromisso pendente", "Tudo em dia por aqui.");
+    }
+    if (done.length) {
+      html += '<div class="section-title">Concluídos</div>';
+      html += '<div class="card-list">' + done.map(agendaCardHtml).join("") + "</div>";
+    }
+    el.view.innerHTML = html;
+    bindAgendaCards();
+  }
+
+  function agendaCardHtml(item) {
+    var rel = item.clienteId ? findProspectById(item.clienteId) : null;
+    var meta = [];
+    meta.push("🕒 " + esc(fmtAgendaDate(item.data, item.hora)));
+    if (rel) meta.push(esc(rel.fazenda || rel.nomeContato));
+    return (
+      '<div class="agenda-card">' +
+      '<button class="agenda-check' + (item.concluido ? " checked" : "") + '" data-id="' + item.id + '" aria-label="Marcar como concluído">' + (item.concluido ? "✓" : "") + "</button>" +
+      '<button class="agenda-body" data-id="' + item.id + '">' +
+      '<div class="agenda-title' + (item.concluido ? " done" : "") + '">' + esc(item.titulo || "(sem título)") + "</div>" +
+      '<div class="meta">' + meta.map(function (m) { return "<span>" + m + "</span>"; }).join("") + "</div>" +
+      "</button>" +
+      "</div>"
+    );
+  }
+
+  function bindAgendaCards() {
+    Array.prototype.forEach.call(el.view.querySelectorAll(".agenda-check"), function (btn) {
+      btn.addEventListener("click", function () {
+        var item = state.agendas.find(function (a) { return a.id === btn.dataset.id; });
+        if (!item) return;
+        item.concluido = !item.concluido;
+        saveState();
+        renderAgendas();
+      });
+    });
+    Array.prototype.forEach.call(el.view.querySelectorAll(".agenda-body"), function (btn) {
+      btn.addEventListener("click", function () {
+        var item = state.agendas.find(function (a) { return a.id === btn.dataset.id; });
+        if (item) openAgendaDetail(item);
+      });
+    });
+  }
+
+  function openAgendaDetail(item) {
+    var rel = item.clienteId ? findProspectById(item.clienteId) : null;
+    var telefone = item.telefone || (rel ? rel.telefone : "");
+    var gps = item.gps || (rel ? rel.gps : "");
+    var rows = [
+      ["Data e hora", fmtAgendaDate(item.data, item.hora)],
+      ["Relacionado a", rel ? (rel.fazenda || rel.nomeContato) : ""],
+      ["Telefone", telefone]
+    ].filter(function (pair) { return pair[1]; });
+
+    var html = '<div class="sheet-title">' + esc(item.titulo || "(sem título)") + "</div>";
+    html += item.concluido
+      ? '<span class="chip" style="background:var(--st-cliente-soft);color:var(--st-cliente)">Concluído</span>'
+      : '<span class="chip" style="background:var(--accent-soft);color:var(--accent)">Pendente</span>';
+
+    html += quickActionsHtml(gps, telefone);
+
+    var cal = gcalUrl(item);
+    if (cal) {
+      html += '<div class="btn-row quick-actions"><a class="btn btn-maps" href="' + esc(cal) + '" target="_blank" rel="noopener">📅 Adicionar à agenda do celular</a></div>';
+    }
+
+    html += '<div class="detail-grid">' + rows.map(function (pair) {
+      return '<div class="detail-row"><span class="k">' + esc(pair[0]) + '</span><span class="v">' + esc(pair[1]) + "</span></div>";
+    }).join("") + "</div>";
+    if (item.obs) html += '<div class="obs-block">' + esc(item.obs) + "</div>";
+    html += '<div class="btn-row"><button class="btn btn-block" id="toggleDoneBtn">' + (item.concluido ? "Reabrir" : "Marcar como concluído") + '</button><button class="btn btn-primary btn-block" id="editBtn">Editar</button></div>';
+    html += '<div class="btn-row"><button class="btn btn-danger btn-block" id="deleteBtn">Excluir compromisso</button></div>';
+
+    el.sheetContent.innerHTML = html;
+    document.getElementById("toggleDoneBtn").addEventListener("click", function () {
+      item.concluido = !item.concluido;
+      saveState();
+      closeSheet();
+      renderAgendas();
+    });
+    document.getElementById("editBtn").addEventListener("click", function () { openAgendaForm(item); });
+    document.getElementById("deleteBtn").addEventListener("click", function () {
+      showConfirm("Excluir este compromisso? Essa ação não pode ser desfeita.", "Excluir", function () {
+        state.agendas = state.agendas.filter(function (a) { return a.id !== item.id; });
+        saveState();
+        closeSheet();
+        renderAgendas();
+      });
+    });
+    openSheet();
+  }
+
+  var AGENDA_FIELDS = ["titulo", "data", "hora", "clienteId", "telefone", "gps", "obs"];
+
+  function relatedClientOptions(selectedId) {
+    var opts = '<option value="">Nenhum</option>';
+    state.prospects.forEach(function (p) {
+      var label = p.fazenda || "";
+      if (p.nomeContato) label += (label ? " — " : "") + p.nomeContato;
+      if (!label) label = "(sem nome)";
+      opts += '<option value="' + esc(p.id) + '"' + (p.id === selectedId ? " selected" : "") + ">" + esc(label) + "</option>";
+    });
+    return opts;
+  }
+
+  function openAgendaForm(rec) {
+    ui.sheetMode = rec ? "edit-agenda" : "add-agenda";
+    var r = rec || {};
+    var html = '<div class="sheet-title">' + (rec ? "Editar compromisso" : "Novo compromisso") + "</div>";
+    html += field({ name: "titulo", label: "Título", value: r.titulo });
+    html += fieldRow(
+      field({ name: "data", label: "Data", type: "date", value: r.data }),
+      field({ name: "hora", label: "Hora (opcional)", type: "time", value: r.hora })
+    );
+    html += '<div class="field"><label for="f_clienteId">Relacionado a (opcional)</label><select id="f_clienteId" name="clienteId">' + relatedClientOptions(r.clienteId) + "</select></div>";
+    html += fieldRow(
+      field({ name: "telefone", label: "Telefone (opcional)", type: "tel", inputmode: "tel", value: r.telefone }),
+      field({ name: "gps", label: "Localização / GPS (opcional)", value: r.gps })
+    );
+    html += field({ name: "obs", label: "Observações", type: "textarea", value: r.obs });
+
+    html += '<div class="btn-row"><button class="btn btn-block" id="cancelBtn">Cancelar</button><button class="btn btn-primary btn-block" id="saveBtn">Salvar</button></div>';
+    if (rec) html += '<div class="btn-row"><button class="btn btn-danger btn-block" id="deleteBtn">Excluir compromisso</button></div>';
+
+    el.sheetContent.innerHTML = html;
+    document.getElementById("cancelBtn").addEventListener("click", closeSheet);
+    document.getElementById("saveBtn").addEventListener("click", function () {
+      var data = readForm(AGENDA_FIELDS);
+      if (!data.titulo || !data.data) {
+        showToast("Preencha ao menos o título e a data.");
+        return;
+      }
+      if (rec) {
+        Object.assign(rec, data);
+      } else {
+        data.id = uid();
+        data.concluido = false;
+        state.agendas.unshift(data);
+      }
+      saveState();
+      closeSheet();
+      render();
+    });
+    var delBtn = document.getElementById("deleteBtn");
+    if (delBtn) {
+      delBtn.addEventListener("click", function () {
+        showConfirm("Excluir este compromisso? Essa ação não pode ser desfeita.", "Excluir", function () {
+          state.agendas = state.agendas.filter(function (a) { return a.id !== rec.id; });
+          saveState();
+          closeSheet();
+          render();
+        });
+      });
+    }
+    openSheet();
+  }
+
+  // ---------- Consultores ----------
+  function filteredConsultores() {
+    return state.consultores.filter(function (r) {
+      if (!ui.search) return true;
+      var hay = [r.consultor, r.regiao, r.municipio, r.cultura].join(" ").toLowerCase();
+      return hay.indexOf(ui.search) !== -1;
+    });
+  }
+
+  function renderConsultores() {
+    var list = filteredConsultores();
+    if (!list.length) {
+      el.view.innerHTML = emptyState("☺", "Nenhum consultor cadastrado", "Adicione um consultor autônomo para começar.", "＋ Novo consultor");
+      bindEmptyStateButton();
+      return;
+    }
+    el.view.innerHTML = '<div class="card-list">' + list.map(consultorCardHtml).join("") + "</div>";
+    Array.prototype.forEach.call(el.view.querySelectorAll(".item-card[data-id]"), function (card) {
+      card.addEventListener("click", function () {
+        var rec = state.consultores.find(function (r) { return r.id === card.dataset.id; });
+        if (rec) openConsultorDetail(rec);
+      });
+    });
+  }
+
+  function consultorCardHtml(r) {
+    var meta = [];
+    if (r.municipio) meta.push("📍 " + esc(r.municipio) + (r.estado ? " / " + esc(r.estado) : ""));
+    if (r.cultura) meta.push(esc(r.cultura));
+    if (r.telefone) meta.push(esc(r.telefone));
+    return (
+      '<button class="item-card" data-id="' + r.id + '">' +
+      '<div class="stripe" style="background:var(--accent)"></div>' +
+      '<div class="body">' +
+      '<div class="top-line"><span class="name">' + esc(r.consultor || "(sem nome)") + "</span>" +
+      (r.regiao ? '<span class="chip" style="background:var(--accent-soft);color:var(--accent)">' + esc(r.regiao) + "</span>" : "") +
+      "</div>" +
+      '<div class="meta">' + meta.map(function (m) { return "<span>" + m + "</span>"; }).join("") + "</div>" +
+      "</div></button>"
+    );
+  }
+
+  // ---------- Bottom sheet plumbing ----------
+  function openSheet() {
+    el.sheetOverlay.dataset.open = "true";
+    el.sheet.dataset.open = "true";
+  }
+  function closeSheet() {
+    el.sheetOverlay.dataset.open = "false";
+    el.sheet.dataset.open = "false";
+  }
+  el.sheetOverlay.addEventListener("click", closeSheet);
+
+  function showConfirm(message, confirmLabel, onConfirm) {
+    var html = '<div class="sheet-title">Confirmar</div>';
+    html += '<div class="about-block" style="margin-bottom:20px;">' + esc(message) + "</div>";
+    html += '<div class="btn-row"><button class="btn btn-block" id="confirmCancelBtn">Cancelar</button><button class="btn btn-danger btn-block" id="confirmOkBtn">' + esc(confirmLabel) + "</button></div>";
+    el.sheetContent.innerHTML = html;
+    document.getElementById("confirmCancelBtn").addEventListener("click", closeSheet);
+    document.getElementById("confirmOkBtn").addEventListener("click", onConfirm);
+    openSheet();
+  }
+
+  var toastTimer = null;
+  function showToast(message) {
+    el.toast.textContent = message;
+    el.toast.dataset.show = "true";
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.toast.dataset.show = "false"; }, 2600);
+  }
+
+  // ---------- Field builder ----------
+  function field(cfg) {
+    var id = "f_" + cfg.name;
+    var value = esc(cfg.value || "");
+    var label = '<label for="' + id + '">' + esc(cfg.label) + "</label>";
+    var input = "";
+    if (cfg.type === "select") {
+      input = '<select id="' + id + '" name="' + cfg.name + '">' +
+        cfg.options.map(function (o) {
+          return '<option value="' + esc(o) + '"' + (o === cfg.value ? " selected" : "") + ">" + esc(o) + "</option>";
+        }).join("") + "</select>";
+    } else if (cfg.type === "list") {
+      var listId = id + "_list";
+      input = '<input id="' + id + '" name="' + cfg.name + '" value="' + value + '" list="' + listId + '" autocomplete="off">' +
+        '<datalist id="' + listId + '">' + cfg.options.map(function (o) { return '<option value="' + esc(o) + '">'; }).join("") + "</datalist>";
+    } else if (cfg.type === "textarea") {
+      input = '<textarea id="' + id + '" name="' + cfg.name + '">' + value + "</textarea>";
+    } else {
+      input = '<input id="' + id + '" name="' + cfg.name + '" type="' + (cfg.type || "text") + '" value="' + value + '"' + (cfg.inputmode ? ' inputmode="' + cfg.inputmode + '"' : "") + ">";
+    }
+    return '<div class="field">' + label + input + "</div>";
+  }
+
+  function fieldRow(a, b) {
+    return '<div class="field-row">' + a + b + "</div>";
+  }
+
+  function readForm(names) {
+    var out = {};
+    names.forEach(function (n) {
+      var elm = document.getElementById("f_" + n);
+      out[n] = elm ? elm.value.trim() : "";
+    });
+    return out;
+  }
+
+  // ---------- Prospect form ----------
+  var PROSPECT_FIELDS = ["fazenda","municipio","estado","nomeContato","cargoContato","telefone","email","gps","status","cultura","produto","mes","areaTotal","areaIrrigada","areaTeste","volume","prioridade","obs","links"];
+
+  function openProspectForm(rec) {
+    ui.sheetMode = rec ? "edit-prospect" : "add-prospect";
+    ui.editingId = rec ? rec.id : null;
+    var r = rec || {};
+
+    var html = '<div class="sheet-title">' + (rec ? "Editar cliente" : "Novo cliente") + "</div>";
+    html += field({ name: "fazenda", label: "Fazenda", value: r.fazenda });
+    html += fieldRow(
+      field({ name: "municipio", label: "Município", value: r.municipio }),
+      field({ name: "estado", label: "Estado", type: "list", options: ["MATO GROSSO", "PARANÁ"], value: r.estado })
+    );
+    html += fieldRow(
+      field({ name: "nomeContato", label: "Nome do contato", value: r.nomeContato }),
+      field({ name: "cargoContato", label: "Cargo", type: "list", options: ["GERENTE", "AGRÔNOMO", "PROPRIETÁRIO", "FILHO DO DONO"], value: r.cargoContato })
+    );
+    html += fieldRow(
+      field({ name: "telefone", label: "Telefone", type: "tel", inputmode: "tel", value: r.telefone }),
+      field({ name: "email", label: "E-mail", type: "email", value: r.email })
+    );
+    html += field({ name: "gps", label: "Coordenadas GPS", value: r.gps });
+    html += fieldRow(
+      field({ name: "status", label: "Status", type: "select", options: STATUS_LIST, value: r.status || "Prospecção" }),
+      field({ name: "prioridade", label: "Prioridade", type: "select", options: PRIORIDADES, value: r.prioridade || "Não Priorizado" })
+    );
+    html += fieldRow(
+      field({ name: "cultura", label: "Cultura", type: "list", options: CULTURAS, value: r.cultura }),
+      field({ name: "produto", label: "Produto", type: "list", options: PRODUTOS, value: r.produto })
+    );
+    html += field({ name: "mes", label: "Mês previsto", type: "list", options: ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"], value: r.mes });
+    html += fieldRow(
+      field({ name: "areaTotal", label: "Área total (ha)", type: "number", inputmode: "decimal", value: r.areaTotal }),
+      field({ name: "areaIrrigada", label: "Área irrigada (ha)", type: "number", inputmode: "decimal", value: r.areaIrrigada })
+    );
+    html += fieldRow(
+      field({ name: "areaTeste", label: "Área teste (ha)", type: "number", inputmode: "decimal", value: r.areaTeste }),
+      field({ name: "volume", label: "Volume esperado (L)", type: "number", inputmode: "decimal", value: r.volume })
+    );
+    html += field({ name: "links", label: "Link (planilha, PPT, fotos...)", value: r.links });
+    html += field({ name: "obs", label: "Observações", type: "textarea", value: r.obs });
+
+    html += '<div class="btn-row">';
+    html += '<button class="btn btn-block" id="cancelBtn">Cancelar</button>';
+    html += '<button class="btn btn-primary btn-block" id="saveBtn">Salvar</button>';
+    html += "</div>";
+    if (rec) {
+      html += '<div class="btn-row"><button class="btn btn-danger btn-block" id="deleteBtn">Excluir cliente</button></div>';
+    }
+
+    el.sheetContent.innerHTML = html;
+    document.getElementById("cancelBtn").addEventListener("click", closeSheet);
+    document.getElementById("saveBtn").addEventListener("click", function () {
+      var data = readForm(PROSPECT_FIELDS);
+      if (!data.fazenda && !data.nomeContato) {
+        showToast("Preencha ao menos a Fazenda ou o Nome do contato.");
+        return;
+      }
+      if (rec) {
+        Object.assign(rec, data);
+      } else {
+        data.id = uid();
+        state.prospects.unshift(data);
+      }
+      saveState();
+      closeSheet();
+      render();
+    });
+    var delBtn = document.getElementById("deleteBtn");
+    if (delBtn) {
+      delBtn.addEventListener("click", function () {
+        showConfirm("Excluir este cliente? Essa ação não pode ser desfeita.", "Excluir", function () {
+          state.prospects = state.prospects.filter(function (p) { return p.id !== rec.id; });
+          saveState();
+          closeSheet();
+          render();
+        });
+      });
+    }
+    openSheet();
+  }
+
+  function openProspectDetail(r) {
+    var key = STATUS_KEY[r.status] || "prospeccao";
+    var rows = [
+      ["Município", r.municipio + (r.estado ? " / " + r.estado : "")],
+      ["Contato", [r.nomeContato, r.cargoContato].filter(Boolean).join(" — ")],
+      ["Telefone", r.telefone],
+      ["E-mail", r.email],
+      ["GPS", r.gps],
+      ["Cultura / Produto", [r.cultura, r.produto].filter(Boolean).join(" / ")],
+      ["Mês previsto", r.mes],
+      ["Área total / irrigada / teste (ha)", [r.areaTotal, r.areaIrrigada, r.areaTeste].map(function (v) { return v || "0"; }).join(" / ")],
+      ["Volume esperado (L)", r.volume],
+      ["Prioridade", r.prioridade],
+      ["Link", r.links]
+    ].filter(function (pair) { return pair[1]; });
+
+    var html = '<div class="sheet-title">' + esc(r.fazenda || r.nomeContato) + "</div>";
+    html += '<span class="chip" style="background:var(--st-' + key + "-soft);color:var(--st-" + key + ')">' + esc(r.status) + "</span>";
+    html += quickActionsHtml(r.gps, r.telefone);
+    html += '<div class="detail-grid">' + rows.map(function (pair) {
+      return '<div class="detail-row"><span class="k">' + esc(pair[0]) + '</span><span class="v">' + esc(pair[1]) + "</span></div>";
+    }).join("") + "</div>";
+    if (r.obs) html += '<div class="obs-block">' + esc(r.obs) + "</div>";
+    html += '<div class="btn-row"><button class="btn btn-block" id="closeBtn">Fechar</button><button class="btn btn-primary btn-block" id="editBtn">Editar</button></div>';
+
+    el.sheetContent.innerHTML = html;
+    document.getElementById("closeBtn").addEventListener("click", closeSheet);
+    document.getElementById("editBtn").addEventListener("click", function () { openProspectForm(r); });
+    openSheet();
+  }
+
+  function openConsultorDetail(r) {
+    var rows = [
+      ["Região", r.regiao],
+      ["Município", r.municipio + (r.estado ? " / " + r.estado : "")],
+      ["Pessoa de contato", r.contato],
+      ["Telefone", r.telefone],
+      ["E-mail", r.email],
+      ["Cultura", r.cultura]
+    ].filter(function (pair) { return pair[1]; });
+
+    var html = '<div class="sheet-title">' + esc(r.consultor || "(sem nome)") + "</div>";
+    if (r.regiao) html += '<span class="chip" style="background:var(--accent-soft);color:var(--accent)">' + esc(r.regiao) + "</span>";
+    html += quickActionsHtml(null, r.telefone);
+    html += '<div class="detail-grid">' + rows.map(function (pair) {
+      return '<div class="detail-row"><span class="k">' + esc(pair[0]) + '</span><span class="v">' + esc(pair[1]) + "</span></div>";
+    }).join("") + "</div>";
+    if (r.obs) html += '<div class="obs-block">' + esc(r.obs) + "</div>";
+    html += '<div class="btn-row"><button class="btn btn-block" id="closeBtn">Fechar</button><button class="btn btn-primary btn-block" id="editBtn">Editar</button></div>';
+
+    el.sheetContent.innerHTML = html;
+    document.getElementById("closeBtn").addEventListener("click", closeSheet);
+    document.getElementById("editBtn").addEventListener("click", function () { openConsultorForm(r); });
+    openSheet();
+  }
+
+  // ---------- Consultor form ----------
+  var CONSULTOR_FIELDS = ["regiao","consultor","municipio","estado","contato","telefone","email","cultura","obs"];
+
+  function openConsultorForm(rec) {
+    ui.sheetMode = rec ? "edit-consultor" : "add-consultor";
+    var r = rec || {};
+    var html = '<div class="sheet-title">' + (rec ? "Editar consultor" : "Novo consultor") + "</div>";
+    html += fieldRow(
+      field({ name: "consultor", label: "Nome do consultor", value: r.consultor }),
+      field({ name: "regiao", label: "Região", value: r.regiao })
+    );
+    html += fieldRow(
+      field({ name: "municipio", label: "Município", value: r.municipio }),
+      field({ name: "estado", label: "Estado", type: "list", options: ["MATO GROSSO", "PARANÁ"], value: r.estado })
+    );
+    html += fieldRow(
+      field({ name: "contato", label: "Pessoa de contato", value: r.contato }),
+      field({ name: "telefone", label: "Telefone", type: "tel", inputmode: "tel", value: r.telefone })
+    );
+    html += fieldRow(
+      field({ name: "email", label: "E-mail", type: "email", value: r.email }),
+      field({ name: "cultura", label: "Cultura", type: "list", options: CULTURAS, value: r.cultura })
+    );
+    html += field({ name: "obs", label: "Observações", type: "textarea", value: r.obs });
+    html += '<div class="btn-row"><button class="btn btn-block" id="cancelBtn">Cancelar</button><button class="btn btn-primary btn-block" id="saveBtn">Salvar</button></div>';
+    if (rec) html += '<div class="btn-row"><button class="btn btn-danger btn-block" id="deleteBtn">Excluir consultor</button></div>';
+
+    el.sheetContent.innerHTML = html;
+    document.getElementById("cancelBtn").addEventListener("click", closeSheet);
+    document.getElementById("saveBtn").addEventListener("click", function () {
+      var data = readForm(CONSULTOR_FIELDS);
+      if (!data.consultor) {
+        showToast("Preencha ao menos o nome do consultor.");
+        return;
+      }
+      if (rec) {
+        Object.assign(rec, data);
+      } else {
+        data.id = uid();
+        state.consultores.unshift(data);
+      }
+      saveState();
+      closeSheet();
+      render();
+    });
+    var delBtn = document.getElementById("deleteBtn");
+    if (delBtn) {
+      delBtn.addEventListener("click", function () {
+        showConfirm("Excluir este consultor? Essa ação não pode ser desfeita.", "Excluir", function () {
+          state.consultores = state.consultores.filter(function (c) { return c.id !== rec.id; });
+          saveState();
+          closeSheet();
+          render();
+        });
+      });
+    }
+    openSheet();
+  }
+
+  // ---------- Menu (backup / ajuda) ----------
+  function openMenuSheet() {
+    ui.sheetMode = "menu";
+    var html = '<div class="sheet-title">Backup e ajuda</div>';
+    html += '<div class="about-block">';
+    html += "<p>Todos os dados ficam salvos <strong>neste aparelho e neste navegador</strong>. Nada é enviado para a internet.</p>";
+    html += "<p>Para não perder informação, ou para levar os dados para outro celular/computador, exporte um backup e depois importe nele.</p>";
+    html += "</div>";
+    html += '<div class="btn-row"><button class="btn btn-primary btn-block" id="exportBtn">Exportar backup (.json)</button></div>';
+    html += '<div class="btn-row"><button class="btn btn-block" id="importBtn">Importar backup (.json)</button></div>';
+
+    html += '<div class="section-title" style="margin-top:22px;">Exportar planilhas</div>';
+    html += '<div class="about-block" style="margin-bottom:10px;">Gera um arquivo de texto com os dados separados por vírgula. Para abrir no Excel ou Google Planilhas: abra o programa e use "Arquivo → Abrir" (ou "Importar"), escolhendo o arquivo baixado.</div>';
+    html += '<div class="btn-row"><button class="btn btn-block" id="exportClientesBtn">Clientes</button><button class="btn btn-block" id="exportAgendaBtn">Agenda</button></div>';
+    html += '<div class="btn-row"><button class="btn btn-block" id="exportConsultoresBtn">Consultores</button></div>';
+
+    html += '<div class="about-block" style="margin-top:18px;"><strong>Instalar como app no celular:</strong> abra este link no navegador do celular, toque no menu do navegador e escolha "Adicionar à tela de início".</div>';
+
+    html += '<div class="section-title" style="margin-top:22px;">Suporte</div>';
+    html += '<div class="about-block" style="margin-bottom:10px;">Ficou com alguma dúvida sobre o uso do app? Fale direto comigo:</div>';
+    html += '<div class="detail-grid">';
+    html += '<div class="detail-row"><span class="k">Nome</span><span class="v">Fellipe Eduardo Silva Vaz</span></div>';
+    html += '<div class="detail-row"><span class="k">Telefone</span><span class="v">(34) 9 9709-4152</span></div>';
+    html += '<div class="detail-row"><span class="k">E-mail</span><span class="v">fellipesilvavaz@gmail.com</span></div>';
+    html += '</div>';
+    html += '<div class="btn-row quick-actions">';
+    html += '<a class="btn btn-whatsapp" href="' + esc(whatsappUrl("(34) 9 9709-4152")) + '" target="_blank" rel="noopener">💬 WhatsApp</a>';
+    html += '<a class="btn btn-maps" href="mailto:fellipesilvavaz@gmail.com" target="_blank" rel="noopener">✉️ E-mail</a>';
+    html += '</div>';
+
+    html += '<div class="btn-row" style="margin-top:22px;"><button class="btn btn-block" id="closeMenuBtn">Fechar</button></div>';
+
+    el.sheetContent.innerHTML = html;
+    document.getElementById("closeMenuBtn").addEventListener("click", closeSheet);
+    document.getElementById("exportBtn").addEventListener("click", exportBackup);
+    document.getElementById("importBtn").addEventListener("click", function () { el.importInput.click(); });
+    document.getElementById("exportClientesBtn").addEventListener("click", exportClientesCsv);
+    document.getElementById("exportAgendaBtn").addEventListener("click", exportAgendaCsv);
+    document.getElementById("exportConsultoresBtn").addEventListener("click", exportConsultoresCsv);
+    openSheet();
+  }
+
+  function handleExportError(err) {
+    if (err && err.code === "declined") return;
+    if (err && err.code === "extension_not_enabled") {
+      showToast("Exportação em CSV indisponível aqui. Use o backup em JSON.");
+      return;
+    }
+    showToast("Não foi possível exportar agora.");
+  }
+
+  function exportBackup() {
+    if (!window.claude || !window.claude.downloads) {
+      showToast("Exportação indisponível neste momento.");
+      return;
+    }
+    var payload = JSON.stringify(state, null, 2);
+    var stamp = new Date().toISOString().slice(0, 10);
+    window.claude.downloads.save({ filename: "backup-pipeline-agro-" + stamp + ".json", data: payload })
+      .then(function () { closeSheet(); })
+      .catch(handleExportError);
+  }
+
+  function csvEscape(v) {
+    var s = v == null ? "" : String(v);
+    if (/[",\n\r]/.test(s)) s = '"' + s.replace(/"/g, '""') + '"';
+    return s;
+  }
+
+  function toCsv(headers, rows) {
+    var lines = [headers.map(csvEscape).join(",")];
+    rows.forEach(function (row) { lines.push(row.map(csvEscape).join(",")); });
+    return "﻿" + lines.join("\r\n");
+  }
+
+  function exportClientesCsv() {
+    if (!window.claude || !window.claude.downloads) {
+      showToast("Exportação indisponível neste momento.");
+      return;
+    }
+    var headers = ["Fazenda", "Município", "Estado", "Nome do Contato", "Cargo", "Telefone", "E-mail", "GPS", "Status", "Cultura", "Produto", "Mês previsto", "Área Total (ha)", "Área Irrigada (ha)", "Área Teste (ha)", "Volume Esperado (L)", "Prioridade", "Link", "Observações"];
+    var rows = state.prospects.map(function (r) {
+      return [r.fazenda, r.municipio, r.estado, r.nomeContato, r.cargoContato, r.telefone, r.email, r.gps, r.status, r.cultura, r.produto, r.mes, r.areaTotal, r.areaIrrigada, r.areaTeste, r.volume, r.prioridade, r.links, r.obs];
+    });
+    var stamp = new Date().toISOString().slice(0, 10);
+    window.claude.downloads.save({ filename: "clientes-" + stamp + ".txt", data: toCsv(headers, rows) })
+      .then(function () { closeSheet(); })
+      .catch(handleExportError);
+  }
+
+  function exportAgendaCsv() {
+    if (!window.claude || !window.claude.downloads) {
+      showToast("Exportação indisponível neste momento.");
+      return;
+    }
+    var headers = ["Título", "Data", "Hora", "Relacionado a", "Telefone", "Localização", "Status", "Observações"];
+    var rows = state.agendas.map(function (a) {
+      var rel = a.clienteId ? findProspectById(a.clienteId) : null;
+      return [a.titulo, a.data, a.hora, rel ? (rel.fazenda || rel.nomeContato) : "", a.telefone, a.gps, a.concluido ? "Concluído" : "Pendente", a.obs];
+    });
+    var stamp = new Date().toISOString().slice(0, 10);
+    window.claude.downloads.save({ filename: "agenda-" + stamp + ".txt", data: toCsv(headers, rows) })
+      .then(function () { closeSheet(); })
+      .catch(handleExportError);
+  }
+
+  function exportConsultoresCsv() {
+    if (!window.claude || !window.claude.downloads) {
+      showToast("Exportação indisponível neste momento.");
+      return;
+    }
+    var headers = ["Consultor", "Região", "Município", "Estado", "Contato", "Telefone", "E-mail", "Cultura", "Observações"];
+    var rows = state.consultores.map(function (c) {
+      return [c.consultor, c.regiao, c.municipio, c.estado, c.contato, c.telefone, c.email, c.cultura, c.obs];
+    });
+    var stamp = new Date().toISOString().slice(0, 10);
+    window.claude.downloads.save({ filename: "consultores-" + stamp + ".txt", data: toCsv(headers, rows) })
+      .then(function () { closeSheet(); })
+      .catch(handleExportError);
+  }
+
+  el.importInput.addEventListener("change", function () {
+    var file = el.importInput.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var data = JSON.parse(reader.result);
+        if (!data || !Array.isArray(data.prospects) || !Array.isArray(data.consultores)) {
+          throw new Error("formato inválido");
+        }
+        showConfirm("Importar este backup vai substituir os dados atuais deste aparelho. Continuar?", "Importar", function () {
+          if (!Array.isArray(data.painelStatusFilter)) data.painelStatusFilter = STATUS_LIST.slice();
+          if (!Array.isArray(data.agendas)) data.agendas = [];
+          state = data;
+          saveState();
+          closeSheet();
+          render();
+        });
+      } catch (e) {
+        showToast("Este arquivo não é um backup válido.");
+      }
+    };
+    reader.readAsText(file);
+    el.importInput.value = "";
+  });
+
+  render();
+})();
+</script>
