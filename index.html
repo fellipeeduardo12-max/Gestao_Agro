@@ -485,18 +485,20 @@
   }
   .tab {
     flex: 1;
+    min-width: 0;
     border: none;
     background: none;
-    padding: 8px 4px;
+    padding: 7px 2px;
     border-radius: 10px;
-    font-size: 0.72rem;
+    font-size: 0.62rem;
     color: var(--text-3);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
+    gap: 2px;
+    white-space: nowrap;
   }
-  .tab .tab-icon { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+  .tab .tab-icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
   .tab .tab-icon svg { width: 100%; height: 100%; }
   .tab[data-active="true"] { color: var(--accent); background: var(--accent-soft); }
 
@@ -598,8 +600,53 @@
   .detail-row .v { text-align: right; font-weight: 500; }
   .obs-block { background: var(--surface-2); border-radius: 10px; padding: 12px; font-size: 0.88rem; color: var(--text-2); margin-top: 4px; white-space: pre-wrap; }
 
+  .foto-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .foto-thumb {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    display: block;
+    flex: none;
+  }
+  .foto-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .foto-remove {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(20, 22, 12, 0.65);
+    color: #fff;
+    font-size: 0.85rem;
+    line-height: 1;
+  }
+
   .about-block { font-size: 0.85rem; color: var(--text-2); line-height: 1.55; }
   .about-block strong { color: var(--text); }
+
+  .param-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    margin-bottom: 8px;
+  }
+  .param-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .param-nome { font-weight: 600; font-size: 0.92rem; }
+  .param-valor {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .param-faixa { font-size: 0.78rem; color: var(--text-3); margin-top: 2px; }
+  .param-texto { font-size: 0.85rem; color: var(--text-2); margin-top: 6px; line-height: 1.45; }
 
   .toast {
     position: fixed;
@@ -670,6 +717,22 @@
       <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17"/></svg></span>
       Agenda
     </button>
+    <button class="tab" data-tab="potencial">
+      <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M11 20V4M18 20v-7"/></svg></span>
+      Potencial
+    </button>
+    <button class="tab" data-tab="produtos">
+      <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5v-9z"/><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9"/></svg></span>
+      Produtos
+    </button>
+    <button class="tab" data-tab="solo">
+      <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 15c2-3 4-3 6 0s4 3 6 0 4-3 6 0"/><path d="M2.5 20c2-3 4-3 6 0s4 3 6 0 4-3 6 0"/><path d="M12 3v9"/><path d="M9 6l3-3 3 3"/></svg></span>
+      Solo
+    </button>
+    <button class="tab" data-tab="relatorios">
+      <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3.5h8L19 8v12.5a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-16a1 1 0 0 1 1-1z"/><path d="M14.5 3.5V8H19"/><path d="M8.5 12.5h7M8.5 15.5h7M8.5 18.5h4"/></svg></span>
+      Visitas
+    </button>
     <button class="tab" data-tab="consultores">
       <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.4-4 4.2-6 7.5-6s6.1 2 7.5 6"/></svg></span>
       Consultores
@@ -708,6 +771,19 @@
     { id: uid(), fazenda: "PRATA", municipio: "LEAL", estado: "", nomeContato: "JAIME", cargoContato: "GERENTE", telefone: "(34) 9 9793-3717", email: "", gps: "", status: "Prospecção", cultura: "CAFÉ", produto: "", mes: "", areaTotal: "", areaIrrigada: "", areaTeste: "", volume: "", prioridade: "Não Priorizado", obs: "", links: "" }
   ];
 
+  var seedProdutos = [
+    { id: uid(), nome: "Volts", dosePorHa: "0.2", valorLitro: "350" },
+    { id: uid(), nome: "Stratus", dosePorHa: "0.2", valorLitro: "350" },
+    { id: uid(), nome: "Troia", dosePorHa: "0.1", valorLitro: "350" },
+    { id: uid(), nome: "Yaris", dosePorHa: "0.4", valorLitro: "170" },
+    { id: uid(), nome: "Biotonic", dosePorHa: "0.5", valorLitro: "120" },
+    { id: uid(), nome: "Galax", dosePorHa: "0.4", valorLitro: "120" },
+    { id: uid(), nome: "Caltimag", dosePorHa: "0.2", valorLitro: "1460" },
+    { id: uid(), nome: "P15", dosePorHa: "0.33", valorLitro: "1880" },
+    { id: uid(), nome: "Proover Can", dosePorHa: "1", valorLitro: "51.2" },
+    { id: uid(), nome: "Proover Soy", dosePorHa: "1", valorLitro: "53.95" }
+  ];
+
   function uid() {
     if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
     return "id-" + Date.now() + "-" + Math.random().toString(16).slice(2);
@@ -719,14 +795,22 @@
       var raw = localStorage.getItem(STORAGE_KEY);
       if (raw) data = JSON.parse(raw);
     } catch (e) {}
-    if (!data) data = { prospects: seedProspects, consultores: [] };
+    if (!data) data = { prospects: seedProspects, consultores: [], produtos: seedProdutos };
     if (!Array.isArray(data.painelStatusFilter)) data.painelStatusFilter = STATUS_LIST.slice();
     if (!Array.isArray(data.agendas)) data.agendas = [];
+    if (!Array.isArray(data.produtos)) data.produtos = [];
+    if (!Array.isArray(data.amostras)) data.amostras = [];
+    if (!data.adubacaoCalc || typeof data.adubacaoCalc !== "object") data.adubacaoCalc = {};
+    if (!Array.isArray(data.relatorios)) data.relatorios = [];
     return data;
   }
 
   function saveState() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) {
+      showToast("Armazenamento do aparelho cheio. Exporte um backup e apague fotos antigas para liberar espaço.");
+    }
   }
 
   var state = loadState();
@@ -735,6 +819,8 @@
     tab: "painel",
     search: "",
     statusFilter: "todos",
+    soloSubTab: "amostras",
+    extracaoCultura: "Soja",
     sheetMode: null,   // 'add-prospect' | 'edit-prospect' | 'view-prospect' | 'add-consultor' | 'edit-consultor' | 'menu'
     editingId: null
   };
@@ -763,10 +849,49 @@
     });
   }
 
+  function toFloat(v) {
+    if (v === "" || v === null || v === undefined) return NaN;
+    return parseFloat(String(v).trim().replace(",", "."));
+  }
+
   function fmtNum(v) {
-    var n = parseFloat(v);
+    var n = toFloat(v);
     if (isNaN(n)) return "0";
     return n.toLocaleString("pt-BR");
+  }
+
+  function fmtCurrency(v) {
+    var n = toFloat(v);
+    if (isNaN(n)) n = 0;
+    return n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+  }
+
+  function fmtNum1(v) {
+    var n = toFloat(v);
+    if (isNaN(n)) return "0,0";
+    return n.toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  }
+
+  function numOrNull(v) {
+    if (v === "" || v === null || v === undefined) return null;
+    var n = toFloat(v);
+    return isNaN(n) ? null : n;
+  }
+
+  function fmtDateBR(dateStr) {
+    if (!dateStr) return "";
+    var parts = dateStr.split("-");
+    if (parts.length !== 3) return dateStr;
+    return parts[2] + "/" + parts[1] + "/" + parts[0];
+  }
+
+  function levelColor(nivel) {
+    if (!nivel) return { bg: "var(--surface-2)", fg: "var(--text-3)" };
+    var n = String(nivel).toUpperCase();
+    if (n.indexOf("MUITO BAIXO") !== -1 || n.indexOf("MUITO ALTO") !== -1) return { bg: "var(--st-inviavel-soft)", fg: "var(--st-inviavel)" };
+    if (n.indexOf("BOM") !== -1 || n.indexOf("AUSENTE") !== -1) return { bg: "var(--st-cliente-soft)", fg: "var(--st-cliente)" };
+    if (n.indexOf("BAIXO") !== -1 || n.indexOf("ALTO") !== -1 || n.indexOf("TRAÇOS") !== -1 || n.indexOf("MÉDIO") !== -1) return { bg: "var(--st-visita-soft)", fg: "var(--st-visita)" };
+    return { bg: "var(--accent-soft)", fg: "var(--accent)" };
   }
 
   function gmapsUrl(gps) {
@@ -780,6 +905,65 @@
     if (!digits) return null;
     if (digits.length <= 11) digits = "55" + digits;
     return "https://wa.me/" + digits;
+  }
+
+  function gpsButtonHtml(targetInputId) {
+    return '<button type="button" class="btn" data-gps-target="' + targetInputId + '" style="margin-top:6px;">📍 Usar minha localização atual</button>';
+  }
+
+  function bindGpsButtons(container) {
+    Array.prototype.forEach.call(container.querySelectorAll("[data-gps-target]"), function (btn) {
+      btn.addEventListener("click", function () {
+        if (!navigator.geolocation) {
+          showToast("Localização não é suportada neste navegador.");
+          return;
+        }
+        var input = document.getElementById(btn.dataset.gpsTarget);
+        var original = btn.textContent;
+        btn.textContent = "Obtendo localização...";
+        btn.disabled = true;
+        navigator.geolocation.getCurrentPosition(
+          function (pos) {
+            if (input) input.value = pos.coords.latitude.toFixed(6) + "," + pos.coords.longitude.toFixed(6);
+            btn.textContent = original;
+            btn.disabled = false;
+            showToast("Localização salva.");
+          },
+          function () {
+            btn.textContent = original;
+            btn.disabled = false;
+            showToast("Não foi possível obter a localização. Verifique a permissão do navegador.");
+          },
+          { enableHighAccuracy: true, timeout: 12000 }
+        );
+      });
+    });
+  }
+
+  function readAndCompressImage(file, maxDim, quality) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var img = new Image();
+        img.onload = function () {
+          var w = img.width, h = img.height;
+          if (w > maxDim || h > maxDim) {
+            if (w > h) { h = Math.round((h * maxDim) / w); w = maxDim; }
+            else { w = Math.round((w * maxDim) / h); h = maxDim; }
+          }
+          var canvas = document.createElement("canvas");
+          canvas.width = w;
+          canvas.height = h;
+          var ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL("image/jpeg", quality));
+        };
+        img.onerror = function () { reject(new Error("Falha ao carregar imagem")); };
+        img.src = e.target.result;
+      };
+      reader.onerror = function () { reject(new Error("Falha ao ler arquivo")); };
+      reader.readAsDataURL(file);
+    });
   }
 
   function quickActionsHtml(gps, telefone) {
@@ -850,21 +1034,26 @@
   function openAddForCurrentTab() {
     if (ui.tab === "consultores") openConsultorForm(null);
     else if (ui.tab === "agendas") openAgendaForm(null);
+    else if (ui.tab === "produtos") openProdutoForm(null);
+    else if (ui.tab === "relatorios") openRelatorioForm(null);
+    else if (ui.tab === "solo") { if (ui.soloSubTab === "amostras") openAmostraForm(null); }
     else openProspectForm(null);
   }
 
   el.fab.addEventListener("click", openAddForCurrentTab);
 
   // ---------- Render root ----------
-  var FAB_LABELS = { prospeccoes: "Novo cliente", consultores: "Novo consultor", agendas: "Novo compromisso" };
+  var FAB_LABELS = { prospeccoes: "Novo cliente", consultores: "Novo consultor", agendas: "Novo compromisso", produtos: "Novo produto", solo: "Nova amostra", relatorios: "Novo relatório" };
+  var NO_FAB_TABS = { painel: true, potencial: true };
 
   function render() {
-    var titles = { painel: "Painel", prospeccoes: "Clientes", consultores: "Consultores", agendas: "Agenda" };
+    var titles = { painel: "Painel", prospeccoes: "Clientes", consultores: "Consultores", agendas: "Agenda", potencial: "Potencial do Cliente", produtos: "Produtos", solo: "Análise de Solo", relatorios: "Relatório de Visitas" };
     el.pageTitle.textContent = titles[ui.tab];
     Array.prototype.forEach.call(el.tabbar.querySelectorAll(".tab"), function (b) {
       b.dataset.active = String(b.dataset.tab === ui.tab);
     });
-    el.fab.style.display = ui.tab === "painel" ? "none" : "flex";
+    var hideFab = NO_FAB_TABS[ui.tab] || (ui.tab === "solo" && ui.soloSubTab !== "amostras");
+    el.fab.style.display = hideFab ? "none" : "flex";
     if (FAB_LABELS[ui.tab]) {
       el.fabLabel.textContent = FAB_LABELS[ui.tab];
       el.fab.setAttribute("aria-label", "Adicionar " + FAB_LABELS[ui.tab].toLowerCase());
@@ -893,6 +1082,10 @@
     if (ui.tab === "painel") return renderPainel();
     if (ui.tab === "prospeccoes") return renderProspeccoes();
     if (ui.tab === "agendas") return renderAgendas();
+    if (ui.tab === "potencial") return renderPotencial();
+    if (ui.tab === "produtos") return renderProdutos();
+    if (ui.tab === "solo") return renderSolo();
+    if (ui.tab === "relatorios") return renderRelatorios();
     if (ui.tab === "consultores") return renderConsultores();
   }
 
@@ -926,8 +1119,8 @@
 
   function renderPainel() {
     var p = state.prospects;
-    var totalArea = p.reduce(function (s, r) { return s + (parseFloat(r.areaTotal) || 0); }, 0);
-    var totalVolume = p.reduce(function (s, r) { return s + (parseFloat(r.volume) || 0); }, 0);
+    var totalArea = p.reduce(function (s, r) { return s + (toFloat(r.areaTotal) || 0); }, 0);
+    var totalVolume = p.reduce(function (s, r) { return s + (toFloat(r.volume) || 0); }, 0);
     var prioridade1 = p.filter(function (r) { return r.prioridade === "1"; });
     var prioridade2 = p.filter(function (r) { return r.prioridade === "2"; });
     var agendaSemana = sortAgendas(agendasDaSemana());
@@ -1281,6 +1474,1266 @@
     openSheet();
   }
 
+  // ---------- Produtos ----------
+  function custoPorHa(produto) {
+    return (toFloat(produto.dosePorHa) || 0) * (toFloat(produto.valorLitro) || 0);
+  }
+
+  function filteredProdutos() {
+    return state.produtos.filter(function (p) {
+      if (!ui.search) return true;
+      return (p.nome || "").toLowerCase().indexOf(ui.search) !== -1;
+    });
+  }
+
+  function renderProdutos() {
+    var list = filteredProdutos();
+    if (!list.length) {
+      el.view.innerHTML = emptyState("📦", "Nenhum produto cadastrado", "Cadastre os produtos que você vende para calcular o potencial de compra dos clientes.", "＋ Novo produto");
+      bindEmptyStateButton();
+      return;
+    }
+    var sorted = list.slice().sort(function (a, b) { return (a.nome || "").localeCompare(b.nome || "", "pt-BR"); });
+    el.view.innerHTML = '<div class="card-list">' + sorted.map(produtoCardHtml).join("") + "</div>";
+    bindProdutoCards();
+  }
+
+  function produtoCardHtml(p) {
+    var custo = custoPorHa(p);
+    return (
+      '<button class="item-card" data-id="' + p.id + '">' +
+      '<div class="stripe" style="background:var(--accent)"></div>' +
+      '<div class="body">' +
+      '<div class="top-line"><span class="name">' + esc(p.nome || "(sem nome)") + "</span>" +
+      '<span class="chip" style="background:var(--accent-soft);color:var(--accent)">' + esc(fmtCurrency(custo)) + "/ha</span>" +
+      "</div>" +
+      '<div class="meta"><span>Dose: ' + esc(fmtNum(p.dosePorHa)) + "/ha</span><span>Valor: " + esc(fmtCurrency(p.valorLitro)) + "</span></div>" +
+      "</div></button>"
+    );
+  }
+
+  function bindProdutoCards() {
+    Array.prototype.forEach.call(el.view.querySelectorAll(".item-card[data-id]"), function (card) {
+      card.addEventListener("click", function () {
+        var rec = state.produtos.find(function (p) { return p.id === card.dataset.id; });
+        if (rec) openProdutoDetail(rec);
+      });
+    });
+  }
+
+  function openProdutoDetail(p) {
+    var custo = custoPorHa(p);
+    var html = '<div class="sheet-title">' + esc(p.nome || "(sem nome)") + "</div>";
+    html += '<div class="detail-grid">';
+    html += '<div class="detail-row"><span class="k">Dose por hectare</span><span class="v">' + esc(fmtNum(p.dosePorHa)) + "</span></div>";
+    html += '<div class="detail-row"><span class="k">Valor por litro/kg</span><span class="v">' + esc(fmtCurrency(p.valorLitro)) + "</span></div>";
+    html += '<div class="detail-row"><span class="k">Custo por hectare</span><span class="v">' + esc(fmtCurrency(custo)) + "</span></div>";
+    html += "</div>";
+    html += '<div class="btn-row"><button class="btn btn-block" id="closeBtn">Fechar</button><button class="btn btn-primary btn-block" id="editBtn">Editar</button></div>';
+    html += '<div class="btn-row"><button class="btn btn-danger btn-block" id="deleteBtn">Excluir produto</button></div>';
+
+    el.sheetContent.innerHTML = html;
+    document.getElementById("closeBtn").addEventListener("click", closeSheet);
+    document.getElementById("editBtn").addEventListener("click", function () { openProdutoForm(p); });
+    document.getElementById("deleteBtn").addEventListener("click", function () {
+      showConfirm("Excluir este produto? Essa ação não pode ser desfeita.", "Excluir", function () {
+        state.produtos = state.produtos.filter(function (x) { return x.id !== p.id; });
+        saveState();
+        closeSheet();
+        render();
+      });
+    });
+    openSheet();
+  }
+
+  var PRODUTO_FIELDS = ["nome", "dosePorHa", "valorLitro"];
+
+  function openProdutoForm(rec) {
+    ui.sheetMode = rec ? "edit-produto" : "add-produto";
+    var r = rec || {};
+    var html = '<div class="sheet-title">' + (rec ? "Editar produto" : "Novo produto") + "</div>";
+    html += field({ name: "nome", label: "Nome do produto", value: r.nome });
+    html += fieldRow(
+      field({ name: "dosePorHa", label: "Dose por hectare", type: "text", inputmode: "decimal", value: r.dosePorHa }),
+      field({ name: "valorLitro", label: "Valor por litro/kg (R$)", type: "text", inputmode: "decimal", value: r.valorLitro })
+    );
+    html += '<div class="field"><label>Custo por hectare (calculado)</label><div class="obs-block" id="custoPreview">' + esc(fmtCurrency(custoPorHa(r))) + "</div></div>";
+
+    html += '<div class="btn-row"><button class="btn btn-block" id="cancelBtn">Cancelar</button><button class="btn btn-primary btn-block" id="saveBtn">Salvar</button></div>';
+    if (rec) html += '<div class="btn-row"><button class="btn btn-danger btn-block" id="deleteBtn">Excluir produto</button></div>';
+
+    el.sheetContent.innerHTML = html;
+
+    function updatePreview() {
+      var dose = toFloat(document.getElementById("f_dosePorHa").value) || 0;
+      var valor = toFloat(document.getElementById("f_valorLitro").value) || 0;
+      document.getElementById("custoPreview").textContent = fmtCurrency(dose * valor);
+    }
+    document.getElementById("f_dosePorHa").addEventListener("input", updatePreview);
+    document.getElementById("f_valorLitro").addEventListener("input", updatePreview);
+
+    document.getElementById("cancelBtn").addEventListener("click", closeSheet);
+    document.getElementById("saveBtn").addEventListener("click", function () {
+      var data = readForm(PRODUTO_FIELDS);
+      if (!data.nome) {
+        showToast("Preencha ao menos o nome do produto.");
+        return;
+      }
+      if (rec) {
+        Object.assign(rec, data);
+      } else {
+        data.id = uid();
+        state.produtos.unshift(data);
+      }
+      saveState();
+      closeSheet();
+      render();
+    });
+    var delBtn = document.getElementById("deleteBtn");
+    if (delBtn) {
+      delBtn.addEventListener("click", function () {
+        showConfirm("Excluir este produto? Essa ação não pode ser desfeita.", "Excluir", function () {
+          state.produtos = state.produtos.filter(function (p) { return p.id !== rec.id; });
+          saveState();
+          closeSheet();
+          render();
+        });
+      });
+    }
+    openSheet();
+  }
+
+  // ---------- Potencial do Cliente ----------
+  function percentualCliente(cliente) {
+    var pct = toFloat(cliente.percentualAtendimento);
+    return isNaN(pct) ? 100 : Math.max(0, Math.min(100, pct));
+  }
+
+  function areaConsiderada(cliente) {
+    var area = toFloat(cliente.areaTotal) || 0;
+    return area * (percentualCliente(cliente) / 100);
+  }
+
+  function potencialPorProduto(cliente, produto) {
+    return custoPorHa(produto) * areaConsiderada(cliente);
+  }
+
+  function potencialTotalCliente(cliente) {
+    return state.produtos.reduce(function (sum, p) { return sum + potencialPorProduto(cliente, p); }, 0);
+  }
+
+  function filteredPotencialClientes() {
+    return state.prospects.filter(function (r) {
+      if (!ui.search) return true;
+      var hay = [r.fazenda, r.nomeContato, r.municipio].join(" ").toLowerCase();
+      return hay.indexOf(ui.search) !== -1;
+    });
+  }
+
+  function renderPotencial() {
+    if (!state.produtos.length) {
+      el.view.innerHTML = emptyState("📦", "Cadastre produtos primeiro", "O potencial de compra é calculado a partir dos produtos cadastrados na aba Produtos.");
+      return;
+    }
+    var list = filteredPotencialClientes();
+    if (!list.length) {
+      el.view.innerHTML = emptyState("📈", "Nenhum cliente encontrado", "Cadastre clientes na aba Clientes para ver o potencial de compra.");
+      return;
+    }
+    var sorted = list.slice().sort(function (a, b) { return potencialTotalCliente(b) - potencialTotalCliente(a); });
+    el.view.innerHTML = '<div class="card-list">' + sorted.map(potencialCardHtml).join("") + "</div>";
+    bindPotencialCards();
+  }
+
+  function potencialCardHtml(r) {
+    var total = potencialTotalCliente(r);
+    var pct = percentualCliente(r);
+    var areaConsid = areaConsiderada(r);
+    return (
+      '<button class="item-card" data-id="' + r.id + '">' +
+      '<div class="stripe" style="background:var(--terra)"></div>' +
+      '<div class="body">' +
+      '<div class="top-line"><span class="name">' + esc(r.fazenda || r.nomeContato || "(sem nome)") + "</span>" +
+      '<span class="chip" style="background:var(--terra-soft);color:var(--terra)">' + esc(fmtCurrency(total)) + "</span>" +
+      "</div>" +
+      '<div class="meta"><span>' + esc(fmtNum(areaConsid)) + " ha considerados</span><span>" + esc(pct) + "% da área</span></div>" +
+      "</div></button>"
+    );
+  }
+
+  function bindPotencialCards() {
+    Array.prototype.forEach.call(el.view.querySelectorAll(".item-card[data-id]"), function (card) {
+      card.addEventListener("click", function () {
+        var rec = state.prospects.find(function (r) { return r.id === card.dataset.id; });
+        if (rec) openPotencialDetail(rec);
+      });
+    });
+  }
+
+  var PCT_PRESETS = [25, 50, 75, 100];
+
+  function openPotencialDetail(r) {
+    var area = toFloat(r.areaTotal) || 0;
+    var pct = percentualCliente(r);
+    var areaConsid = areaConsiderada(r);
+    var total = potencialTotalCliente(r);
+
+    var html = '<div class="sheet-title">' + esc(r.fazenda || r.nomeContato || "(sem nome)") + "</div>";
+    html += '<div class="about-block">Área total cadastrada: <strong>' + esc(fmtNum(area)) + " ha</strong></div>";
+    if (!area) {
+      html += '<div class="about-block" style="margin-top:6px;">Cadastre a área total deste cliente na aba Clientes para calcular o potencial.</div>';
+    }
+
+    html += '<div class="section-title" style="margin-top:16px;">Quanto da área pretende atender?</div>';
+    html += '<div class="filter-row" style="padding:0;overflow:visible;">';
+    PCT_PRESETS.forEach(function (p) {
+      html += '<button class="filter-chip" data-pct="' + p + '" data-active="' + (pct === p) + '">' + p + "%</button>";
+    });
+    html += "</div>";
+    html += '<div class="field" style="margin-top:10px;">' +
+      '<label for="f_pctCustom">Ou digite uma porcentagem (%)</label>' +
+      '<input id="f_pctCustom" type="text" inputmode="decimal" value="' + esc(pct) + '">' +
+      "</div>";
+
+    html += '<div class="stat-card" style="margin:14px 0;"><div class="label">Área considerada</div><div class="value">' + esc(fmtNum(areaConsid)) + " ha</div></div>";
+
+    html += '<div class="detail-grid">' + potencialGridRows(r) + "</div>";
+    html += '<div class="btn-row"><button class="btn btn-block" id="closeBtn">Fechar</button></div>';
+
+    el.sheetContent.innerHTML = html;
+
+    function applyPercent(newPct) {
+      var clamped = Math.max(0, Math.min(100, toFloat(newPct)));
+      if (isNaN(clamped)) return;
+      r.percentualAtendimento = clamped;
+      saveState();
+      if (ui.tab === "potencial") renderPotencial();
+      openPotencialDetail(r);
+    }
+
+    Array.prototype.forEach.call(el.sheetContent.querySelectorAll(".filter-chip"), function (chip) {
+      chip.addEventListener("click", function () { applyPercent(parseFloat(chip.dataset.pct)); });
+    });
+    document.getElementById("f_pctCustom").addEventListener("change", function () {
+      applyPercent(this.value);
+    });
+    document.getElementById("closeBtn").addEventListener("click", closeSheet);
+    openSheet();
+  }
+
+  function potencialGridRows(r) {
+    var total = potencialTotalCliente(r);
+    var html = "";
+    state.produtos.forEach(function (p) {
+      html += '<div class="detail-row"><span class="k">' + esc(p.nome || "(sem nome)") + '</span><span class="v">' + esc(fmtCurrency(potencialPorProduto(r, p))) + "</span></div>";
+    });
+    html += '<div class="detail-row"><span class="k"><strong>Total</strong></span><span class="v"><strong>' + esc(fmtCurrency(total)) + "</strong></span></div>";
+    return html;
+  }
+
+  // ---------- Análise de Solo ----------
+  var SOLO_PARAMS = [
+    {
+      key: "phCaCl2", grupo: "pH e Acidez", nome: "pH em CaCl₂", unidade: "—", faixaIdeal: "5,6 – 5,8",
+      nivel: function (v) {
+        if (v <= 4.4) return "MUITO BAIXO";
+        if (v <= 4.8) return "BAIXO";
+        if (v <= 5.5) return "MÉDIO";
+        if (v <= 5.8) return "BOM";
+        return "MUITO BOM";
+      },
+      texto: function (v) {
+        if (v <= 4.4) return "pH muito ácido: Al³⁺ tóxico provável, H+Al muito alto, bases (Ca e Mg) possivelmente muito baixas, V% muito baixo.";
+        if (v <= 4.8) return "Solo ácido: H+Al elevado, Ca e Mg possivelmente baixos.";
+        if (v <= 5.5) return "Solo levemente ácido: verificar Ca, Mg e V%.";
+        if (v <= 5.8) return "pH adequado para a maioria das culturas.";
+        return "pH elevado: verificar equilíbrio entre Ca, Mg e K.";
+      }
+    },
+    {
+      key: "phAgua", grupo: "pH e Acidez", nome: "pH em água", unidade: "—", faixaIdeal: "5,6 – 6,3",
+      nivel: function (v) {
+        if (v <= 5.1) return "MUITO BAIXO";
+        if (v <= 5.5) return "BAIXO";
+        if (v <= 6.3) return "MÉDIO";
+        if (v <= 6.6) return "BOM";
+        return "MUITO BOM";
+      },
+      texto: function () { return "Parâmetro secundário. Priorizar pH CaCl₂ para interpretação de acidez."; }
+    },
+    {
+      key: "hAl", grupo: "pH e Acidez", nome: "Acidez Potencial — H+Al", unidade: "cmolc/dm³", faixaIdeal: "≤ 2,5",
+      nivel: function (v) {
+        if (v <= 1) return "MUITO BAIXO";
+        if (v <= 2.5) return "BAIXO";
+        if (v <= 5) return "MÉDIO";
+        if (v <= 9) return "ALTO";
+        return "MUITO ALTO";
+      },
+      texto: function (v) {
+        if (v <= 2.5) return "Acidez potencial baixa: H⁺ e Al³⁺ ocupam pequena fração da CTC.";
+        if (v <= 5) return "Acidez potencial moderada: H⁺ e Al³⁺ com presença relevante no complexo de troca.";
+        if (v <= 9) return "Acidez potencial alta: H⁺ e Al³⁺ dominam parte significativa da CTC, reduzindo disponibilidade de bases.";
+        return "Acidez potencial muito alta: H⁺ e Al³⁺ ocupam grande parte da CTC, comprometendo fortemente a disponibilidade de nutrientes.";
+      }
+    },
+    {
+      key: "al", grupo: "pH e Acidez", nome: "Alumínio Tóxico — Al³⁺", unidade: "cmolc/dm³", faixaIdeal: "= 0",
+      nivel: function (v) {
+        if (v === 0) return "AUSENTE";
+        if (v <= 0.2) return "TRAÇOS";
+        if (v <= 0.5) return "MÉDIO";
+        return "ALTO";
+      },
+      texto: function (v) {
+        if (v === 0) return "Alumínio tóxico ausente no solo.";
+        if (v <= 0.2) return "Alumínio tóxico em traços: monitorar comportamento de pH e V%.";
+        if (v <= 0.5) return "Alumínio tóxico em nível médio: inibe o alongamento radicular e reduz absorção de P, Ca e Mg.";
+        return "Alumínio tóxico alto: elemento limitante severo. Inibe fortemente o sistema radicular e a absorção de macronutrientes.";
+      }
+    },
+    {
+      key: "ctcEfetiva", grupo: "CTC e Matéria Orgânica", nome: "CTC Efetiva — t", unidade: "cmolc/dm³", faixaIdeal: "4,6 – 8,0",
+      nivel: function (v) {
+        if (v <= 0.8) return "MUITO BAIXO";
+        if (v <= 2.3) return "BAIXO";
+        if (v <= 4.6) return "MÉDIO";
+        if (v <= 8) return "BOM";
+        return "MUITO BOM";
+      },
+      texto: function (v) {
+        if (v <= 2.3) return "CTC efetiva muito baixa: capacidade reduzida de retenção de cátions no solo.";
+        if (v <= 4.6) return "CTC efetiva em faixa limitada.";
+        if (v <= 8) return "CTC efetiva adequada para boa retenção de nutrientes.";
+        return "CTC efetiva alta: solo com elevada capacidade de retenção de cátions.";
+      }
+    },
+    {
+      key: "ctcTotal", grupo: "CTC e Matéria Orgânica", nome: "CTC Total (pH 7,0) — T", unidade: "cmolc/dm³", faixaIdeal: "4,3 – 15",
+      nivel: function (v) {
+        if (v <= 1.6) return "MUITO BAIXO — textura muito arenosa";
+        if (v <= 4.3) return "BAIXO — textura arenosa";
+        if (v <= 8.6) return "MÉDIO — textura média";
+        if (v <= 15) return "BOM — textura argilosa";
+        return "MUITO BOM — textura muito argilosa";
+      },
+      texto: function (v) {
+        if (v <= 4.3) return "CTC total baixa indica solo de textura arenosa, com menor capacidade de retenção de nutrientes e maior risco de lixiviação.";
+        if (v <= 8.6) return "CTC total em faixa média. Boa estabilidade nutricional.";
+        if (v <= 15) return "CTC total alta. Solo argiloso com elevada capacidade de retenção de nutrientes.";
+        return "CTC total muito alta. Solo muito argiloso: forte capacidade de fixação de fósforo.";
+      }
+    },
+    {
+      key: "mo", grupo: "CTC e Matéria Orgânica", nome: "Matéria Orgânica — M.O.", unidade: "g/kg ou %", faixaIdeal: "2,1 – 3,0 %",
+      nivel: function (v) {
+        if (v <= 0.7) return "MUITO BAIXO";
+        if (v <= 1.5) return "BAIXO";
+        if (v <= 2) return "MÉDIO";
+        if (v <= 3) return "BOM";
+        return "MUITO BOM";
+      },
+      texto: function (v) {
+        if (v < 1) return "M.O. muito baixa: atividade biológica comprometida, baixa retenção de nutrientes e menor estabilidade de agregados.";
+        if (v < 2) return "M.O. abaixo do ideal para plena atividade biológica e retenção de água.";
+        return "M.O. em nível adequado: contribui para retenção de nutrientes, atividade microbiológica e estrutura do solo.";
+      }
+    },
+    {
+      key: "vPercent", grupo: "Bases: Ca, Mg e K", nome: "Saturação por Bases — V%", unidade: "%", faixaIdeal: "61 – 70%",
+      nivel: function (v) {
+        if (v <= 20) return "MUITO BAIXO";
+        if (v <= 35) return "BAIXO";
+        if (v <= 60) return "MÉDIO";
+        if (v <= 70) return "BOM";
+        return "MUITO BOM";
+      },
+      texto: function (v) {
+        if (v < 36) return "V% baixo: bases (Ca, Mg, K) ocupam fração pequena da CTC. Solo com fertilidade química reduzida.";
+        if (v <= 60) return "V% em faixa de transição: bases presentes mas aquém do ideal para máxima produtividade.";
+        if (v <= 70) return "V% na faixa ideal: equilíbrio adequado entre bases e acidez potencial.";
+        return "V% elevado: bases muito representativas na CTC. Verificar equilíbrio entre Ca, Mg e K.";
+      }
+    },
+    {
+      key: "mPercent", grupo: "Bases: Ca, Mg e K", nome: "Saturação por Al — m%", unidade: "%", faixaIdeal: "≤ 20%",
+      nivel: function (v) {
+        if (v <= 20) return "BAIXO — sem toxidez";
+        if (v <= 40) return "MÉDIO";
+        if (v <= 60) return "ALTO";
+        return "MUITO ALTO";
+      },
+      texto: function (v) {
+        if (v <= 20) return "Saturação por Al dentro do limite: alumínio não é elemento limitante.";
+        if (v <= 40) return "Saturação por Al em nível médio: alumínio começa a ocupar parcela relevante do complexo de troca.";
+        if (v <= 60) return "Saturação por Al alta: alumínio tóxico ocupa parte significativa da CTC, com impacto sobre o sistema radicular.";
+        return "Saturação por Al muito alta: alumínio é o cátion dominante no complexo de troca. Elemento altamente limitante.";
+      }
+    },
+    {
+      key: "ca", grupo: "Bases: Ca, Mg e K", nome: "Cálcio — Ca²⁺", unidade: "cmolc/dm³", faixaIdeal: "2,41 – 4,00",
+      nivel: function (v) {
+        if (v <= 0.4) return "MUITO BAIXO";
+        if (v <= 1.2) return "BAIXO";
+        if (v <= 2.4) return "MÉDIO";
+        if (v <= 4) return "BOM";
+        return "MUITO BOM";
+      },
+      texto: function (v) {
+        if (v <= 1.2) return "Ca muito baixo: elemento fundamental para estrutura do solo, desenvolvimento celular e integridade de raízes. Presença insuficiente no complexo de troca.";
+        if (v <= 2.4) return "Ca em faixa de transição. Verificar relação com Mg e V%.";
+        if (v <= 4) return "Ca em nível adequado para a maioria das culturas.";
+        return "Ca elevado. Verificar relação Ca/Mg para identificar possível desequilíbrio com magnésio.";
+      }
+    },
+    {
+      key: "mg", grupo: "Bases: Ca, Mg e K", nome: "Magnésio — Mg²⁺", unidade: "cmolc/dm³", faixaIdeal: "0,91 – 1,50",
+      nivel: function (v) {
+        if (v <= 0.15) return "MUITO BAIXO";
+        if (v <= 0.45) return "BAIXO";
+        if (v <= 0.9) return "MÉDIO";
+        if (v <= 1.5) return "BOM";
+        return "MUITO BOM";
+      },
+      texto: function (v) {
+        if (v <= 0.45) return "Mg muito baixo: elemento central da molécula de clorofila. Nível insuficiente compromete a fotossíntese.";
+        if (v <= 0.9) return "Mg em faixa de transição. Verificar relação Ca/Mg.";
+        if (v <= 1.5) return "Mg em nível adequado.";
+        return "Mg elevado: excesso de Mg pode exercer efeito antagônico sobre Ca e K na absorção radicular.";
+      }
+    },
+    {
+      key: "k", grupo: "Bases: Ca, Mg e K", nome: "Potássio — K⁺", unidade: "cmolc/dm³", faixaIdeal: "0,21 – 0,26",
+      nivel: function (v) {
+        if (v <= 0.06) return "MUITO BAIXO";
+        if (v <= 0.12) return "BAIXO";
+        if (v <= 0.2) return "MÉDIO";
+        if (v <= 0.26) return "BOM";
+        return "MUITO BOM";
+      },
+      texto: function (v) {
+        if (v <= 0.12) return "K muito baixo: elemento essencial para regulação estomática, qualidade de grãos e resistência a patógenos. Nível insuficiente no complexo de troca.";
+        if (v <= 0.2) return "K em faixa de transição. Monitorar, especialmente em solos de textura arenosa.";
+        if (v <= 0.26) return "K em nível adequado.";
+        return "K elevado. Verificar % K na CTC para avaliar equilíbrio com Ca e Mg.";
+      }
+    },
+    {
+      key: "pMehlich", grupo: "Fósforo, Enxofre e Micronutrientes", nome: "Fósforo — P Mehlich-1", unidade: "mg/dm³",
+      faixaIdeal: function (sample) {
+        var argila = numOrNull(sample.percentArgila);
+        if (argila === null) return "depende da % de argila";
+        if (argila > 60) return "> 8,1 (>60% argila)";
+        if (argila >= 35) return "> 12,1 (35–60%)";
+        if (argila >= 15) return "> 20,1 (15–35%)";
+        return "> 30,1 (<15%)";
+      },
+      nivel: function (v, sample) {
+        var argila = numOrNull(sample.percentArgila);
+        if (argila === null) return "Insira % argila";
+        if (argila > 60) {
+          if (v <= 2.7) return "MUITO BAIXO";
+          if (v <= 5.4) return "BAIXO";
+          if (v <= 8) return "MÉDIO";
+          if (v <= 12) return "BOM";
+          return "MUITO BOM";
+        }
+        if (argila >= 35) {
+          if (v <= 4) return "MUITO BAIXO";
+          if (v <= 8) return "BAIXO";
+          if (v <= 12) return "MÉDIO";
+          if (v <= 18) return "BOM";
+          return "MUITO BOM";
+        }
+        if (argila >= 15) {
+          if (v <= 6.6) return "MUITO BAIXO";
+          if (v <= 12) return "BAIXO";
+          if (v <= 20) return "MÉDIO";
+          if (v <= 30) return "BOM";
+          return "MUITO BOM";
+        }
+        if (v <= 10) return "MUITO BAIXO";
+        if (v <= 20) return "BAIXO";
+        if (v <= 30) return "MÉDIO";
+        if (v <= 45) return "BOM";
+        return "MUITO BOM";
+      },
+      texto: function () { return "Interpretação ajustada pela % de argila. Quanto maior o teor de argila, maior a fixação de P pelo solo e maior o nível crítico exigido."; }
+    },
+    {
+      key: "pResina", grupo: "Fósforo, Enxofre e Micronutrientes", nome: "Fósforo — P Resina", unidade: "mg/dm³", faixaIdeal: "15 – 20",
+      nivel: function (v) {
+        if (v <= 5) return "MUITO BAIXO";
+        if (v <= 8) return "BAIXO";
+        if (v <= 14) return "MÉDIO";
+        if (v <= 20) return "BOM";
+        return "MUITO BOM";
+      },
+      texto: function () { return "P Resina: método de extração alternativo ao Mehlich-1. Os valores de referência são distintos — utilize a tabela específica para Resina."; }
+    },
+    {
+      key: "s", grupo: "Fósforo, Enxofre e Micronutrientes", nome: "Enxofre — S", unidade: "mg/dm³", faixaIdeal: "5 – 12",
+      nivel: function (v) {
+        if (v <= 2) return "MUITO BAIXO";
+        if (v <= 4) return "BAIXO";
+        if (v <= 10) return "MÉDIO";
+        if (v <= 12) return "BOM";
+        return "MUITO BOM";
+      },
+      texto: function (v) {
+        if (v <= 4) return "S baixo: elemento essencial na síntese de aminoácidos sulfurados. Nível crítico especialmente em leguminosas.";
+        if (v <= 10) return "S em faixa de transição.";
+        return "S em nível adequado.";
+      }
+    },
+    {
+      key: "b", grupo: "Fósforo, Enxofre e Micronutrientes", nome: "Boro — B", unidade: "mg/dm³", faixaIdeal: "0,36 – 0,6",
+      nivel: function (v) {
+        if (v <= 0.15) return "MUITO BAIXO";
+        if (v <= 0.35) return "BAIXO";
+        if (v <= 0.6) return "MÉDIO";
+        if (v <= 0.9) return "BOM";
+        return "MUITO BOM";
+      },
+      texto: function (v) {
+        if (v <= 0.6) return "B baixo: elemento essencial para transporte de açúcares, floração e frutificação. Micronutriente com alta mobilidade e susceptibilidade à lixiviação.";
+        return "B em nível adequado. Extrator: Água Quente.";
+      }
+    },
+    {
+      key: "cu", grupo: "Fósforo, Enxofre e Micronutrientes", nome: "Cobre — Cu", unidade: "mg/dm³", faixaIdeal: "0,8 – 1,2",
+      nivel: function (v) {
+        if (v <= 0.3) return "MUITO BAIXO";
+        if (v <= 0.7) return "BAIXO";
+        if (v <= 1.2) return "MÉDIO";
+        if (v <= 1.8) return "BOM";
+        return "MUITO BOM";
+      },
+      texto: function (v) {
+        if (v <= 1.2) return "Cu baixo: elemento envolvido na lignificação de tecidos e mecanismos de resistência a patógenos.";
+        return "Cu em nível adequado. Extrator: Mehlich-1.";
+      }
+    },
+    {
+      key: "fe", grupo: "Fósforo, Enxofre e Micronutrientes", nome: "Ferro — Fe", unidade: "mg/dm³", faixaIdeal: "19 – 30",
+      nivel: function (v) {
+        if (v <= 8) return "MUITO BAIXO";
+        if (v <= 18) return "BAIXO";
+        if (v <= 30) return "MÉDIO";
+        if (v <= 45) return "BOM";
+        return "MUITO BOM";
+      },
+      texto: function (v) {
+        if (v <= 30) return "Fe baixo: componente de enzimas respiratórias. Deficiência incomum em solos tropicais.";
+        return "Fe em nível adequado. Valores altos são naturais em solos tropicais. Extrator: Mehlich-1.";
+      }
+    },
+    {
+      key: "mn", grupo: "Fósforo, Enxofre e Micronutrientes", nome: "Manganês — Mn", unidade: "mg/dm³", faixaIdeal: "6 – 8",
+      nivel: function (v) {
+        if (v <= 2) return "MUITO BAIXO";
+        if (v <= 5) return "BAIXO";
+        if (v <= 8) return "MÉDIO";
+        if (v <= 12) return "BOM";
+        return "MUITO BOM";
+      },
+      texto: function (v) {
+        if (v <= 8) return "Mn baixo: elemento atuante na fotossíntese e no metabolismo do nitrogênio.";
+        return "Mn em nível adequado. Extrator: Mehlich-1.";
+      }
+    },
+    {
+      key: "zn", grupo: "Fósforo, Enxofre e Micronutrientes", nome: "Zinco — Zn", unidade: "mg/dm³", faixaIdeal: "1,0 – 1,5",
+      nivel: function (v) {
+        if (v <= 0.4) return "MUITO BAIXO";
+        if (v <= 0.9) return "BAIXO";
+        if (v <= 1.5) return "MÉDIO";
+        if (v <= 2.2) return "BOM";
+        return "MUITO BOM";
+      },
+      texto: function (v) {
+        if (v <= 1.5) return "Zn baixo: elemento ativador de enzimas e envolvido na síntese de auxinas. Deficiência frequente em solos arenosos.";
+        return "Zn em nível adequado. Extrator: Mehlich-1.";
+      }
+    }
+  ];
+
+  var SOLO_RELACOES = [
+    {
+      key: "caMg", nome: "Relação Ca/Mg", unidade: "adim.", faixaIdeal: "3:1 – 5:1",
+      value: function (s) {
+        var mg = numOrNull(s.mg), ca = numOrNull(s.ca);
+        if (!mg || ca === null) return null;
+        return ca / mg;
+      },
+      nivel: function (v) {
+        if (v < 3) return "BAIXO";
+        if (v <= 5) return "BOM";
+        if (v <= 6) return "ALTO";
+        return "MUITO ALTO";
+      },
+      texto: function (v) {
+        if (v < 3) return "Ca/Mg baixo: Mg em excesso relativo ao Ca. Antagonismo pode reduzir absorção de Ca.";
+        if (v <= 5) return "Relação Ca/Mg equilibrada.";
+        if (v <= 6) return "Ca/Mg levemente alto: Mg pode estar sub-representado em relação ao Ca.";
+        return "Ca/Mg muito alto: Ca fortemente dominante. Mg possivelmente deficiente em relação às bases.";
+      }
+    },
+    {
+      key: "pctCaCtc", nome: "% Ca na CTC", unidade: "%", faixaIdeal: "60 – 80%",
+      value: function (s) {
+        var ctc = numOrNull(s.ctcTotal), ca = numOrNull(s.ca);
+        if (!ctc || ca === null) return null;
+        return (ca / ctc) * 100;
+      },
+      nivel: function (v) {
+        if (v < 40) return "BAIXO";
+        if (v <= 70) return "BOM";
+        return "ALTO";
+      },
+      texto: function (v) { return "Ca representa " + fmtNum1(v) + "% da CTC. Ideal: 60–80%. Ca abaixo de 60% indica baixa participação do cálcio no complexo de troca."; }
+    },
+    {
+      key: "pctMgCtc", nome: "% Mg na CTC", unidade: "%", faixaIdeal: "10 – 20%",
+      value: function (s) {
+        var ctc = numOrNull(s.ctcTotal), mg = numOrNull(s.mg);
+        if (!ctc || mg === null) return null;
+        return (mg / ctc) * 100;
+      },
+      nivel: function (v) {
+        if (v < 10) return "BAIXO";
+        if (v <= 20) return "BOM";
+        return "ALTO";
+      },
+      texto: function (v) { return "Mg representa " + fmtNum1(v) + "% da CTC. Ideal: 10–20%."; }
+    },
+    {
+      key: "pctKCtc", nome: "% K na CTC", unidade: "%", faixaIdeal: "3 – 6%",
+      value: function (s) {
+        var ctc = numOrNull(s.ctcTotal), k = numOrNull(s.k);
+        if (!ctc || k === null) return null;
+        return (k / ctc) * 100;
+      },
+      nivel: function (v) {
+        if (v < 3) return "BAIXO";
+        if (v <= 6) return "BOM";
+        return "ALTO";
+      },
+      texto: function (v) { return "K representa " + fmtNum1(v) + "% da CTC. Ideal: 3–6%. Em solos arenosos, buscar 4–5% para compensar maior lixiviação."; }
+    },
+    {
+      key: "pctHAlCtc", nome: "% H+Al na CTC", unidade: "%", faixaIdeal: "< 25%",
+      value: function (s) {
+        var v = numOrNull(s.vPercent);
+        if (v === null) return null;
+        return (1 - v / 100) * 100;
+      },
+      nivel: function (v) {
+        if (v < 25) return "BAIXO";
+        if (v <= 40) return "MÉDIO";
+        return "ALTO";
+      },
+      texto: function (v) { return "H+Al representa " + fmtNum1(v) + "% da CTC. Quanto maior este percentual, menor é a saturação por bases e maior a acidez potencial."; }
+    }
+  ];
+
+  var EXTRACAO_DATA = {
+    "Soja": {
+      "N": { ext: 78, exp: 54, unidade: "kg/ha" }, "P2O5": { ext: 15.8, exp: 11, unidade: "kg/ha" }, "K2O": { ext: 58.1, exp: 21.8, unidade: "kg/ha" },
+      "Ca": { ext: 22.1, exp: 2.8, unidade: "kg/ha" }, "Mg": { ext: 10.7, exp: 2.6, unidade: "kg/ha" }, "S": { ext: 4.8, exp: 2.5, unidade: "kg/ha" },
+      "B": { ext: 82, exp: 46, unidade: "g/ha" }, "Cu": { ext: 5.8, exp: 3.3, unidade: "g/ha" }, "Fe": { ext: 218, exp: 95, unidade: "g/ha" },
+      "Mn": { ext: 59.5, exp: 25.8, unidade: "g/ha" }, "Mo": { ext: 0.2, exp: 0.1, unidade: "g/ha" }, "Zn": { ext: 35, exp: 19, unidade: "g/ha" }
+    },
+    "Milho": {
+      "N": { ext: 26.1, exp: 18.1, unidade: "kg/ha" }, "P2O5": { ext: 5.8, exp: 4.2, unidade: "kg/ha" }, "K2O": { ext: 31.5, exp: 20.9, unidade: "kg/ha" },
+      "Ca": { ext: 4.3, exp: 0.9, unidade: "kg/ha" }, "Mg": { ext: 0.9, exp: 0.4, unidade: "kg/ha" }, "S": { ext: 1.5, exp: 0.7, unidade: "kg/ha" },
+      "B": { ext: 12.3, exp: 7.6, unidade: "g/ha" }, "Cu": { ext: 2.5, exp: 1.7, unidade: "g/ha" }, "Fe": { ext: 55, exp: 24.5, unidade: "g/ha" },
+      "Mn": { ext: 16.5, exp: 10.6, unidade: "g/ha" }, "Mo": { ext: 0.06, exp: 0.04, unidade: "g/ha" }, "Zn": { ext: 16.7, exp: 10.7, unidade: "g/ha" }
+    },
+    "Algodão": {
+      "N": { ext: 58, exp: 14, unidade: "kg/ha" }, "P2O5": { ext: 9, exp: 2, unidade: "kg/ha" }, "K2O": { ext: 82, exp: 24, unidade: "kg/ha" },
+      "Ca": { ext: 32, exp: 3, unidade: "kg/ha" }, "Mg": { ext: 7, exp: 1, unidade: "kg/ha" }, "S": { ext: 10, exp: 2, unidade: "kg/ha" },
+      "B": { ext: 74, exp: 18, unidade: "g/ha" }, "Cu": { ext: 11, exp: 2, unidade: "g/ha" }, "Fe": { ext: 1.28, exp: 16.1, unidade: "g/ha" },
+      "Mn": { ext: 65, exp: 8, unidade: "g/ha" }, "Mo": { ext: null, exp: null, unidade: "g/ha" }, "Zn": { ext: 57, exp: 7, unidade: "g/ha" }
+    },
+    "Sorgo Grão": {
+      "N": { ext: 23.7, exp: 15.8, unidade: "kg/ha" }, "P2O5": { ext: 9.8, exp: 6.7, unidade: "kg/ha" }, "K2O": { ext: 34.7, exp: 8, unidade: "kg/ha" },
+      "Ca": { ext: 8.3, exp: 0.4, unidade: "kg/ha" }, "Mg": { ext: 3, exp: 1.7, unidade: "kg/ha" }, "S": { ext: 3, exp: 1.5, unidade: "kg/ha" },
+      "B": { ext: 100, exp: null, unidade: "g/ha" }, "Cu": { ext: 73, exp: null, unidade: "g/ha" }, "Fe": { ext: 1.89, exp: null, unidade: "g/ha" },
+      "Mn": { ext: 340, exp: null, unidade: "g/ha" }, "Mo": { ext: 2.7, exp: null, unidade: "g/ha" }, "Zn": { ext: 162, exp: null, unidade: "g/ha" }
+    }
+  };
+
+  function soloGrupos() {
+    var groups = [];
+    SOLO_PARAMS.forEach(function (p) { if (groups.indexOf(p.grupo) === -1) groups.push(p.grupo); });
+    return groups;
+  }
+
+  function amostraFieldKeys() {
+    return ["produtorFazenda", "talhao", "profundidade", "data", "percentArgila"].concat(SOLO_PARAMS.map(function (p) { return p.key; }));
+  }
+
+  function renderSolo() {
+    var html = '<div class="filter-row" style="padding:0 0 14px;overflow:visible;">';
+    [["amostras", "Amostras"], ["adubacao", "Adubação"], ["extracao", "Extração"]].forEach(function (t) {
+      html += '<button class="filter-chip" data-subtab="' + t[0] + '" data-active="' + (ui.soloSubTab === t[0]) + '">' + t[1] + "</button>";
+    });
+    html += "</div>";
+    html += '<div id="soloSubView"></div>';
+    el.view.innerHTML = html;
+    Array.prototype.forEach.call(el.view.querySelectorAll(".filter-row .filter-chip"), function (chip) {
+      chip.addEventListener("click", function () {
+        ui.soloSubTab = chip.dataset.subtab;
+        render();
+      });
+    });
+    if (ui.soloSubTab === "adubacao") renderAdubacaoCalc();
+    else if (ui.soloSubTab === "extracao") renderExtracao();
+    else renderAmostras();
+  }
+
+  // ----- Amostras -----
+  function filteredAmostras() {
+    return state.amostras.filter(function (a) {
+      if (!ui.search) return true;
+      var hay = [a.produtorFazenda, a.talhao].join(" ").toLowerCase();
+      return hay.indexOf(ui.search) !== -1;
+    });
+  }
+
+  function renderAmostras() {
+    var target = document.getElementById("soloSubView");
+    var list = filteredAmostras();
+    if (!list.length) {
+      target.innerHTML = emptyState("🧪", "Nenhuma amostra cadastrada", "Cadastre uma análise de solo para ver a interpretação automática.", "＋ Nova amostra");
+      bindEmptyStateButton();
+      return;
+    }
+    var sorted = list.slice().sort(function (a, b) { return (b.data || "").localeCompare(a.data || ""); });
+    target.innerHTML = '<div class="card-list">' + sorted.map(amostraCardHtml).join("") + "</div>";
+    bindAmostraCards();
+  }
+
+  function amostraCardHtml(a) {
+    var meta = [];
+    if (a.talhao) meta.push(esc(a.talhao));
+    if (a.data) meta.push(esc(fmtDateBR(a.data)));
+    if (a.profundidade) meta.push(esc(a.profundidade));
+    return (
+      '<button class="item-card" data-id="' + a.id + '">' +
+      '<div class="stripe" style="background:var(--accent)"></div>' +
+      '<div class="body">' +
+      '<div class="top-line"><span class="name">' + esc(a.produtorFazenda || "(sem nome)") + "</span></div>" +
+      '<div class="meta">' + meta.map(function (m) { return "<span>" + m + "</span>"; }).join("") + "</div>" +
+      "</div></button>"
+    );
+  }
+
+  function bindAmostraCards() {
+    Array.prototype.forEach.call(document.querySelectorAll("#soloSubView .item-card[data-id]"), function (card) {
+      card.addEventListener("click", function () {
+        var rec = state.amostras.find(function (a) { return a.id === card.dataset.id; });
+        if (rec) openAmostraDetail(rec);
+      });
+    });
+  }
+
+  function paramCardHtml(p, sample) {
+    var v = numOrNull(sample[p.key]);
+    var faixa = typeof p.faixaIdeal === "function" ? p.faixaIdeal(sample) : p.faixaIdeal;
+    if (v === null) {
+      return (
+        '<div class="param-card">' +
+        '<div class="param-top"><span class="param-nome">' + esc(p.nome) + '</span><span class="chip" style="background:var(--surface-2);color:var(--text-3)">Não informado</span></div>' +
+        '<div class="param-faixa">Faixa ideal: ' + esc(faixa) + "</div>" +
+        "</div>"
+      );
+    }
+    var nivel = p.nivel(v, sample);
+    var texto = p.texto(v, sample);
+    var color = levelColor(nivel);
+    return (
+      '<div class="param-card">' +
+      '<div class="param-top"><span class="param-nome">' + esc(p.nome) + '</span><span class="chip" style="background:' + color.bg + ";color:" + color.fg + '">' + esc(nivel) + "</span></div>" +
+      '<div class="param-valor">' + esc(fmtNum(v)) + " " + esc(p.unidade) + "</div>" +
+      '<div class="param-faixa">Faixa ideal: ' + esc(faixa) + "</div>" +
+      (texto ? '<div class="param-texto">' + esc(texto) + "</div>" : "") +
+      "</div>"
+    );
+  }
+
+  function relacaoCardHtml(r, sample) {
+    var v = r.value(sample);
+    if (v === null) {
+      return (
+        '<div class="param-card">' +
+        '<div class="param-top"><span class="param-nome">' + esc(r.nome) + '</span><span class="chip" style="background:var(--surface-2);color:var(--text-3)">—</span></div>' +
+        '<div class="param-faixa">Faixa ideal: ' + esc(r.faixaIdeal) + "</div>" +
+        "</div>"
+      );
+    }
+    var nivel = r.nivel(v);
+    var texto = r.texto(v);
+    var color = levelColor(nivel);
+    return (
+      '<div class="param-card">' +
+      '<div class="param-top"><span class="param-nome">' + esc(r.nome) + '</span><span class="chip" style="background:' + color.bg + ";color:" + color.fg + '">' + esc(nivel) + "</span></div>" +
+      '<div class="param-valor">' + esc(fmtNum1(v)) + " " + esc(r.unidade) + "</div>" +
+      '<div class="param-faixa">Faixa ideal: ' + esc(r.faixaIdeal) + "</div>" +
+      (texto ? '<div class="param-texto">' + esc(texto) + "</div>" : "") +
+      "</div>"
+    );
+  }
+
+  function openAmostraDetail(a) {
+    var html = '<div class="sheet-title">' + esc(a.produtorFazenda || "(sem nome)") + "</div>";
+    var subMeta = [a.talhao, a.profundidade, fmtDateBR(a.data)].filter(Boolean).join(" · ");
+    if (subMeta) html += '<div class="about-block">' + esc(subMeta) + "</div>";
+
+    soloGrupos().forEach(function (grupo) {
+      html += '<div class="section-title" style="margin-top:16px;">' + esc(grupo) + "</div>";
+      SOLO_PARAMS.filter(function (p) { return p.grupo === grupo; }).forEach(function (p) {
+        html += paramCardHtml(p, a);
+      });
+    });
+
+    html += '<div class="section-title" style="margin-top:16px;">Relações entre Bases (calculadas)</div>';
+    SOLO_RELACOES.forEach(function (r) { html += relacaoCardHtml(r, a); });
+
+    html += '<div class="btn-row" style="margin-top:16px;"><button class="btn btn-block" id="closeBtn">Fechar</button><button class="btn btn-primary btn-block" id="editBtn">Editar</button></div>';
+    html += '<div class="btn-row"><button class="btn btn-danger btn-block" id="deleteBtn">Excluir amostra</button></div>';
+
+    el.sheetContent.innerHTML = html;
+    document.getElementById("closeBtn").addEventListener("click", closeSheet);
+    document.getElementById("editBtn").addEventListener("click", function () { openAmostraForm(a); });
+    document.getElementById("deleteBtn").addEventListener("click", function () {
+      showConfirm("Excluir esta amostra? Essa ação não pode ser desfeita.", "Excluir", function () {
+        state.amostras = state.amostras.filter(function (x) { return x.id !== a.id; });
+        saveState();
+        closeSheet();
+        renderSolo();
+      });
+    });
+    openSheet();
+  }
+
+  function openAmostraForm(rec) {
+    ui.sheetMode = rec ? "edit-amostra" : "add-amostra";
+    var r = rec || {};
+    var html = '<div class="sheet-title">' + (rec ? "Editar amostra" : "Nova amostra") + "</div>";
+
+    html += field({ name: "produtorFazenda", label: "Produtor / Fazenda", value: r.produtorFazenda });
+    html += fieldRow(
+      field({ name: "talhao", label: "Talhão / Amostra", value: r.talhao }),
+      field({ name: "profundidade", label: "Profundidade", value: r.profundidade || "0-20 cm" })
+    );
+    html += fieldRow(
+      field({ name: "data", label: "Data da análise", type: "date", value: r.data }),
+      field({ name: "percentArgila", label: "% de Argila", type: "text", inputmode: "decimal", value: r.percentArgila })
+    );
+
+    soloGrupos().forEach(function (grupo) {
+      html += '<div class="section-title" style="margin-top:16px;">' + esc(grupo) + "</div>";
+      var params = SOLO_PARAMS.filter(function (p) { return p.grupo === grupo; });
+      for (var i = 0; i < params.length; i += 2) {
+        var campoA = field({ name: params[i].key, label: params[i].nome + " (" + params[i].unidade + ")", type: "text", inputmode: "decimal", value: r[params[i].key] });
+        var campoB = params[i + 1] ? field({ name: params[i + 1].key, label: params[i + 1].nome + " (" + params[i + 1].unidade + ")", type: "text", inputmode: "decimal", value: r[params[i + 1].key] }) : "<div></div>";
+        html += fieldRow(campoA, campoB);
+      }
+    });
+
+    html += '<div class="about-block" style="margin-top:6px;">Deixe em branco os parâmetros que você não tiver — só os preenchidos entram na interpretação.</div>';
+    html += '<div class="btn-row"><button class="btn btn-block" id="cancelBtn">Cancelar</button><button class="btn btn-primary btn-block" id="saveBtn">Salvar</button></div>';
+    if (rec) html += '<div class="btn-row"><button class="btn btn-danger btn-block" id="deleteBtn">Excluir amostra</button></div>';
+
+    el.sheetContent.innerHTML = html;
+    document.getElementById("cancelBtn").addEventListener("click", closeSheet);
+    document.getElementById("saveBtn").addEventListener("click", function () {
+      var data = readForm(amostraFieldKeys());
+      if (!data.produtorFazenda) {
+        showToast("Preencha ao menos o Produtor/Fazenda.");
+        return;
+      }
+      if (rec) {
+        Object.assign(rec, data);
+      } else {
+        data.id = uid();
+        state.amostras.unshift(data);
+      }
+      saveState();
+      closeSheet();
+      render();
+    });
+    var delBtn = document.getElementById("deleteBtn");
+    if (delBtn) {
+      delBtn.addEventListener("click", function () {
+        showConfirm("Excluir esta amostra? Essa ação não pode ser desfeita.", "Excluir", function () {
+          state.amostras = state.amostras.filter(function (a) { return a.id !== rec.id; });
+          saveState();
+          closeSheet();
+          render();
+        });
+      });
+    }
+    openSheet();
+  }
+
+  // ----- Adubação -----
+  function calcField(name, label, value) {
+    return '<div class="field"><label for="calc_' + name + '">' + esc(label) + '</label><input id="calc_' + name + '" data-calc="' + name + '" type="text" inputmode="decimal" value="' + esc(value || "") + '"></div>';
+  }
+
+  function calagemResultadoTexto(d) {
+    var vDes = numOrNull(d.calagemVDesejado), vAtu = numOrNull(d.calagemVAtual), ctc = numOrNull(d.calagemCtc), prnt = numOrNull(d.calagemPrnt);
+    if (vDes === null || vAtu === null || ctc === null || !prnt) return "—";
+    var nc = ((vDes - vAtu) * ctc) / prnt;
+    if (nc <= 0) return "0 t/ha — V% atual já atinge o desejado.";
+    return fmtNum(nc) + " t/ha";
+  }
+
+  function gessoResultadoTexto(d) {
+    var fator = numOrNull(d.gessoFator), argila = numOrNull(d.gessoArgila);
+    if (fator === null || argila === null) return "—";
+    return fmtNum(fator * argila) + " kg/ha";
+  }
+
+  function aduboResultadoHtml(d) {
+    var pontos = numOrNull(d.aduboPontos), conc = numOrNull(d.aduboConcentracao), valorT = numOrNull(d.aduboValorTonelada);
+    var kgHa = (pontos !== null && conc) ? pontos / (conc / 100) : null;
+    var custoKg = valorT !== null ? valorT / 1000 : null;
+    var custoTotal = (kgHa !== null && custoKg !== null) ? kgHa * custoKg : null;
+    return (
+      statCard("Produto (kg/ha)", kgHa !== null ? fmtNum(kgHa) : "—") +
+      statCard("Custo por kg", custoKg !== null ? fmtCurrency(custoKg) : "—") +
+      statCard("Custo total (R$/ha)", custoTotal !== null ? fmtCurrency(custoTotal) : "—")
+    );
+  }
+
+  function updateAdubacaoResultados() {
+    var d = state.adubacaoCalc;
+    var calagemEl = document.getElementById("calagemResultado");
+    if (calagemEl) calagemEl.querySelector(".value").textContent = calagemResultadoTexto(d);
+    var gessoEl = document.getElementById("gessoResultado");
+    if (gessoEl) gessoEl.querySelector(".value").textContent = gessoResultadoTexto(d);
+    var aduboEl = document.getElementById("aduboResultado");
+    if (aduboEl) aduboEl.innerHTML = aduboResultadoHtml(d);
+  }
+
+  function renderAdubacaoCalc() {
+    var target = document.getElementById("soloSubView");
+    var d = state.adubacaoCalc;
+    var html = "";
+
+    html += '<div class="section-title">Necessidade de Calagem</div>';
+    html += '<div class="about-block" style="margin-bottom:8px;">Calcula quanto calcário aplicar para elevar a saturação por bases (V%) ao nível desejado.</div>';
+    html += fieldRow(calcField("calagemVDesejado", "V% desejado", d.calagemVDesejado), calcField("calagemVAtual", "V% atual (da amostra)", d.calagemVAtual));
+    html += fieldRow(calcField("calagemCtc", "CTC Total (cmolc/dm³)", d.calagemCtc), calcField("calagemPrnt", "PRNT do calcário (%)", d.calagemPrnt));
+    html += '<div class="stat-card" id="calagemResultado"><div class="label">Necessidade de calcário</div><div class="value">' + calagemResultadoTexto(d) + "</div></div>";
+
+    html += '<div class="section-title" style="margin-top:22px;">Gessagem</div>';
+    html += '<div class="about-block" style="margin-bottom:8px;">Estimativa de gesso agrícola com base no teor de argila.</div>';
+    html += fieldRow(calcField("gessoFator", "Fator (padrão 50)", d.gessoFator), calcField("gessoArgila", "% de Argila", d.gessoArgila));
+    html += '<div class="stat-card" id="gessoResultado"><div class="label">Necessidade de gesso</div><div class="value">' + gessoResultadoTexto(d) + "</div></div>";
+
+    html += '<div class="section-title" style="margin-top:22px;">Adubação Geral e Custo</div>';
+    html += '<div class="about-block" style="margin-bottom:8px;">Converte a recomendação em "pontos" de nutriente na quantidade do produto comercial e no custo por hectare.</div>';
+    html += fieldRow(calcField("aduboPontos", "Pontos recomendados (kg/ha do nutriente)", d.aduboPontos), calcField("aduboConcentracao", "Concentração do adubo (%)", d.aduboConcentracao));
+    html += calcField("aduboValorTonelada", "Valor da tonelada do adubo (R$)", d.aduboValorTonelada);
+    html += '<div class="stat-grid" id="aduboResultado">' + aduboResultadoHtml(d) + "</div>";
+
+    target.innerHTML = html;
+    Array.prototype.forEach.call(target.querySelectorAll("input[data-calc]"), function (input) {
+      input.addEventListener("input", function () {
+        state.adubacaoCalc[input.dataset.calc] = input.value;
+        saveState();
+        updateAdubacaoResultados();
+      });
+    });
+  }
+
+  // ----- Extração e Exportação -----
+  function renderExtracao() {
+    var target = document.getElementById("soloSubView");
+    var culturas = Object.keys(EXTRACAO_DATA);
+    var html = '<div class="filter-row" style="padding:0 0 14px;overflow:visible;">';
+    culturas.forEach(function (c) {
+      html += '<button class="filter-chip" data-cultura="' + esc(c) + '" data-active="' + (ui.extracaoCultura === c) + '">' + esc(c) + "</button>";
+    });
+    html += "</div>";
+
+    var dados = EXTRACAO_DATA[ui.extracaoCultura];
+    html += '<div class="detail-grid">';
+    Object.keys(dados).forEach(function (nutriente) {
+      var n = dados[nutriente];
+      var linha = (n.ext != null ? fmtNum(n.ext) : "—") + " extr. · " + (n.exp != null ? fmtNum(n.exp) : "—") + " exp. (" + n.unidade + ")";
+      html += '<div class="detail-row"><span class="k">' + esc(nutriente) + '</span><span class="v">' + esc(linha) + "</span></div>";
+    });
+    html += "</div>";
+    html += '<div class="about-block" style="margin-top:12px;">"Extração" é o total de nutriente absorvido pela planta. "Exportação" é o que sai da lavoura junto com a colheita (grão/fibra) — a diferença retorna ao solo pela palhada.</div>';
+
+    target.innerHTML = html;
+    Array.prototype.forEach.call(target.querySelectorAll(".filter-chip"), function (chip) {
+      chip.addEventListener("click", function () {
+        ui.extracaoCultura = chip.dataset.cultura;
+        renderExtracao();
+      });
+    });
+  }
+
+  // ---------- Relatório de Visitas ----------
+  var RELATORIO_DISCLAIMER = "Este relatório organiza a estrutura da visita para revisão profissional. Ele não substitui visita técnica, diagnóstico agronômico, análise laboratorial, receituário, normas vigentes, responsabilidade profissional nem julgamento técnico. Recomendação de manejo, produto ou dose é ato técnico com responsabilidade profissional — a decisão final e a assinatura são do responsável técnico.";
+
+  var RELATORIO_FIELDS = ["titulo", "clienteId", "dataVisita", "cultura", "estagioFenologico", "extensaoAvaliacao", "gps", "observado", "leituraTecnica", "orientacoes", "limitacoes", "pendenciasObs"];
+
+  var PRINT_CSS = "@page{size:A4;margin:18mm 16mm}body{font-family:Georgia,'Times New Roman',serif;color:#23261e;line-height:1.5;margin:0}h1{font-size:20pt;margin:0 0 4pt}h2{font-size:14pt;margin:0 0 4pt;border-bottom:1px solid #ccc;padding-bottom:4pt}.print-header{margin-bottom:20pt;border-bottom:2px solid #4d6a34;padding-bottom:10pt}.print-cliente{font-size:13pt;font-weight:bold;margin-top:4pt}.print-meta{font-size:9pt;color:#666;margin-top:2pt}.print-report{margin-bottom:22pt}.print-break{page-break-before:always}.print-report-meta{font-size:9pt;color:#666;margin-bottom:8pt}.print-secao{margin-bottom:8pt;page-break-inside:avoid}.print-secao-titulo{font-size:10pt;font-weight:bold;text-transform:uppercase;letter-spacing:.03em;color:#4d6a34;margin-bottom:2pt}.print-secao-texto{font-size:10.5pt;white-space:pre-wrap}.print-fotos{display:flex;flex-wrap:wrap;gap:6pt;margin-top:6pt;page-break-inside:avoid}.print-fotos img{width:110pt;height:110pt;object-fit:cover;border:1px solid #ccc;border-radius:4pt}.print-disclaimer{margin-top:24pt;padding-top:10pt;border-top:1px solid #ccc;font-size:8pt;color:#888}";
+
+  function printSecaoHtml(titulo, texto) {
+    if (!texto) return "";
+    return '<div class="print-secao"><div class="print-secao-titulo">' + esc(titulo) + '</div><div class="print-secao-texto">' + esc(texto).replace(/\n/g, "<br>") + "</div></div>";
+  }
+
+  function buildRelatoriosPrintHtml(cliente, relatorios) {
+    var geradoEm = new Date().toLocaleDateString("pt-BR");
+    var clienteInfo = [cliente.municipio, cliente.estado].filter(Boolean).join(" / ");
+    var html = '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Relatório de Visitas — ' + esc(cliente.fazenda || cliente.nomeContato || "") + "</title><style>" + PRINT_CSS + "</style></head><body>";
+    html += '<div class="print-header"><h1>Relatório de Visitas Técnicas</h1>';
+    html += '<div class="print-cliente">' + esc(cliente.fazenda || cliente.nomeContato || "") + (clienteInfo ? " — " + esc(clienteInfo) : "") + "</div>";
+    html += '<div class="print-meta">Gerado em ' + esc(geradoEm) + " · " + relatorios.length + " visita(s)</div></div>";
+
+    relatorios.forEach(function (r, idx) {
+      html += '<div class="print-report' + (idx > 0 ? " print-break" : "") + '">';
+      html += "<h2>" + esc(r.titulo || "Visita") + "</h2>";
+      var meta = [r.dataVisita ? fmtDateBR(r.dataVisita) : "", r.cultura, r.estagioFenologico ? "Estágio: " + r.estagioFenologico : "", r.extensaoAvaliacao].filter(Boolean);
+      if (meta.length) html += '<div class="print-report-meta">' + meta.map(esc).join(" · ") + "</div>";
+      html += printSecaoHtml("Observado", r.observado);
+      html += printSecaoHtml("Leitura técnica (interpretação)", r.leituraTecnica);
+      html += printSecaoHtml("Orientações", r.orientacoes);
+      html += printSecaoHtml("Limitações da avaliação", r.limitacoes);
+      html += printSecaoHtml("Pendências e observações", r.pendenciasObs);
+      if (r.fotos && r.fotos.length) {
+        html += '<div class="print-secao-titulo">Fotos</div><div class="print-fotos">' + r.fotos.map(function (f) { return '<img src="' + f.dataUrl + '" alt="">'; }).join("") + "</div>";
+      }
+      html += "</div>";
+    });
+
+    html += '<div class="print-disclaimer">' + esc(RELATORIO_DISCLAIMER) + "</div>";
+    html += "</body></html>";
+    return html;
+  }
+
+  function exportarRelatoriosClientePdf(cliente) {
+    var relatorios = state.relatorios
+      .filter(function (r) { return r.clienteId === cliente.id; })
+      .sort(function (a, b) { return (a.dataVisita || "").localeCompare(b.dataVisita || ""); });
+    if (!relatorios.length) {
+      showToast("Nenhum relatório de visita para este cliente.");
+      return;
+    }
+    var printWindow = window.open("", "_blank");
+    if (!printWindow) {
+      showToast("Não foi possível abrir a janela de impressão. Verifique se o navegador bloqueou pop-ups.");
+      return;
+    }
+    printWindow.document.open();
+    printWindow.document.write(buildRelatoriosPrintHtml(cliente, relatorios));
+    printWindow.document.close();
+    setTimeout(function () {
+      printWindow.focus();
+      printWindow.print();
+    }, 400);
+  }
+
+  function filteredRelatorios() {
+    return state.relatorios.filter(function (r) {
+      if (!ui.search) return true;
+      var hay = [r.titulo, r.observado].join(" ").toLowerCase();
+      return hay.indexOf(ui.search) !== -1;
+    });
+  }
+
+  function renderRelatorios() {
+    var list = filteredRelatorios();
+    if (!list.length) {
+      el.view.innerHTML = emptyState("📝", "Nenhum relatório cadastrado", "Registre o que foi feito na visita a um cliente.", "＋ Novo relatório");
+      bindEmptyStateButton();
+      return;
+    }
+    var sorted = list.slice().sort(function (a, b) { return (b.dataVisita || "").localeCompare(a.dataVisita || ""); });
+    el.view.innerHTML = '<div class="card-list">' + sorted.map(relatorioCardHtml).join("") + "</div>";
+    bindRelatorioCards();
+  }
+
+  function relatorioCardHtml(r) {
+    var rel = r.clienteId ? findProspectById(r.clienteId) : null;
+    var meta = [];
+    if (r.dataVisita) meta.push(esc(fmtDateBR(r.dataVisita)));
+    if (rel) meta.push(esc(rel.fazenda || rel.nomeContato));
+    return (
+      '<button class="item-card" data-id="' + r.id + '">' +
+      '<div class="stripe" style="background:var(--accent)"></div>' +
+      '<div class="body">' +
+      '<div class="top-line"><span class="name">' + esc(r.titulo || "(sem título)") + "</span></div>" +
+      '<div class="meta">' + meta.map(function (m) { return "<span>" + m + "</span>"; }).join("") + "</div>" +
+      "</div></button>"
+    );
+  }
+
+  function bindRelatorioCards() {
+    Array.prototype.forEach.call(el.view.querySelectorAll(".item-card[data-id]"), function (card) {
+      card.addEventListener("click", function () {
+        var rec = state.relatorios.find(function (r) { return r.id === card.dataset.id; });
+        if (rec) openRelatorioDetail(rec);
+      });
+    });
+  }
+
+  function relatorioSecaoHtml(titulo, texto) {
+    if (!texto) return "";
+    return '<div class="section-title" style="margin-top:16px;">' + esc(titulo) + '</div><div class="obs-block">' + esc(texto) + "</div>";
+  }
+
+  function openRelatorioDetail(r) {
+    var rel = r.clienteId ? findProspectById(r.clienteId) : null;
+    var html = '<div class="sheet-title">' + esc(r.titulo || "(sem título)") + "</div>";
+    var subMeta = [r.dataVisita ? fmtDateBR(r.dataVisita) : "", rel ? (rel.fazenda || rel.nomeContato) : ""].filter(Boolean).join(" · ");
+    if (subMeta) html += '<div class="about-block">' + esc(subMeta) + "</div>";
+    if (r.cultura || r.estagioFenologico) {
+      html += '<div class="about-block" style="margin-top:4px;">' + [r.cultura, r.estagioFenologico ? "Estágio: " + r.estagioFenologico : ""].filter(Boolean).map(esc).join(" · ") + "</div>";
+    }
+    if (r.extensaoAvaliacao) html += '<div class="about-block" style="margin-top:4px;"><strong>Extensão da avaliação:</strong> ' + esc(r.extensaoAvaliacao) + "</div>";
+
+    html += quickActionsHtml(r.gps || (rel ? rel.gps : ""), rel ? rel.telefone : "");
+
+    html += relatorioSecaoHtml("Observado", r.observado);
+    html += relatorioSecaoHtml("Leitura técnica (interpretação)", r.leituraTecnica);
+    html += relatorioSecaoHtml("Orientações", r.orientacoes);
+    html += relatorioSecaoHtml("Limitações da avaliação", r.limitacoes);
+    html += relatorioSecaoHtml("Pendências e observações", r.pendenciasObs);
+
+    if (r.fotos && r.fotos.length) {
+      html += '<div class="section-title" style="margin-top:16px;">Fotos (' + r.fotos.length + ")</div>";
+      html += '<div class="foto-grid">' + r.fotos.map(function (f) {
+        return '<a class="foto-thumb" href="' + f.dataUrl + '" target="_blank" rel="noopener"><img src="' + f.dataUrl + '" alt=""></a>';
+      }).join("") + "</div>";
+    }
+
+    html += '<div class="section-title" style="margin-top:16px;">Pontos para validação do profissional</div>';
+    html += '<div class="about-block">' + esc(RELATORIO_DISCLAIMER) + "</div>";
+
+    html += '<div class="btn-row" style="margin-top:16px;"><button class="btn btn-block" id="closeBtn">Fechar</button><button class="btn btn-primary btn-block" id="editBtn">Editar</button></div>';
+    html += '<div class="btn-row"><button class="btn btn-danger btn-block" id="deleteBtn">Excluir relatório</button></div>';
+
+    el.sheetContent.innerHTML = html;
+    document.getElementById("closeBtn").addEventListener("click", closeSheet);
+    document.getElementById("editBtn").addEventListener("click", function () { openRelatorioForm(r); });
+    document.getElementById("deleteBtn").addEventListener("click", function () {
+      showConfirm("Excluir este relatório? Essa ação não pode ser desfeita.", "Excluir", function () {
+        state.relatorios = state.relatorios.filter(function (x) { return x.id !== r.id; });
+        saveState();
+        closeSheet();
+        renderRelatorios();
+      });
+    });
+    openSheet();
+  }
+
+  function openRelatorioForm(rec) {
+    ui.sheetMode = rec ? "edit-relatorio" : "add-relatorio";
+    var r = rec || {};
+    var html = '<div class="sheet-title">' + (rec ? "Editar relatório" : "Novo relatório") + "</div>";
+
+    html += field({ name: "titulo", label: "Título (ex.: Visita técnica — Fazenda X)", value: r.titulo });
+    html += fieldRow(
+      field({ name: "dataVisita", label: "Data da visita", type: "date", value: r.dataVisita }),
+      "<div></div>"
+    );
+    html += '<div class="field"><label for="f_clienteId">Cliente relacionado (opcional)</label><select id="f_clienteId" name="clienteId">' + relatedClientOptions(r.clienteId) + "</select></div>";
+    html += fieldRow(
+      field({ name: "cultura", label: "Cultura", type: "list", options: CULTURAS, value: r.cultura }),
+      field({ name: "estagioFenologico", label: "Estágio fenológico", value: r.estagioFenologico })
+    );
+    html += field({ name: "extensaoAvaliacao", label: "Talhões / extensão avaliada", value: r.extensaoAvaliacao });
+    html += field({ name: "gps", label: "Coordenadas GPS do ponto avaliado", value: r.gps }) + gpsButtonHtml("f_gps");
+    html += field({ name: "observado", label: "O que foi observado", type: "textarea", value: r.observado });
+    html += field({ name: "leituraTecnica", label: "Leitura técnica (interpretação)", type: "textarea", value: r.leituraTecnica });
+    html += field({ name: "orientacoes", label: "Orientações (e a condição de cada uma)", type: "textarea", value: r.orientacoes });
+    html += field({ name: "limitacoes", label: "Limitações da avaliação", type: "textarea", value: r.limitacoes });
+    html += field({ name: "pendenciasObs", label: "Pendências (responsável/prazo) e observações", type: "textarea", value: r.pendenciasObs });
+
+    html += '<div class="field"><label>Fotos da visita</label>' +
+      '<label class="btn btn-block" for="fotoInput" style="cursor:pointer;">📷 Adicionar fotos</label>' +
+      '<input type="file" id="fotoInput" accept="image/*" multiple capture="environment" style="display:none;">' +
+      '<div class="foto-grid" id="fotosGrid"></div>' +
+      "</div>";
+
+    html += '<div class="about-block" style="margin-top:6px;">Este relatório não substitui visita técnica, diagnóstico, análise laboratorial nem receituário — é um rascunho para sua revisão e assinatura profissional.</div>';
+    html += '<div class="btn-row"><button class="btn btn-block" id="cancelBtn">Cancelar</button><button class="btn btn-primary btn-block" id="saveBtn">Salvar</button></div>';
+    if (rec) html += '<div class="btn-row"><button class="btn btn-danger btn-block" id="deleteBtn">Excluir relatório</button></div>';
+
+    el.sheetContent.innerHTML = html;
+    bindGpsButtons(el.sheetContent);
+
+    var fotos = (r.fotos || []).slice();
+    function renderFotosGrid() {
+      var grid = document.getElementById("fotosGrid");
+      if (!grid) return;
+      grid.innerHTML = fotos.map(function (f) {
+        return '<div class="foto-thumb"><img src="' + f.dataUrl + '" alt=""><button type="button" class="foto-remove" data-foto-id="' + f.id + '">×</button></div>';
+      }).join("");
+      Array.prototype.forEach.call(grid.querySelectorAll(".foto-remove"), function (btn) {
+        btn.addEventListener("click", function () {
+          fotos = fotos.filter(function (f) { return f.id !== btn.dataset.fotoId; });
+          renderFotosGrid();
+        });
+      });
+    }
+    renderFotosGrid();
+
+    document.getElementById("fotoInput").addEventListener("change", function (e) {
+      var files = Array.prototype.slice.call(e.target.files);
+      if (!files.length) return;
+      Promise.all(files.map(function (f) { return readAndCompressImage(f, 1000, 0.6); }))
+        .then(function (dataUrls) {
+          dataUrls.forEach(function (url) { fotos.push({ id: uid(), dataUrl: url }); });
+          renderFotosGrid();
+        })
+        .catch(function () { showToast("Não foi possível processar uma das fotos."); });
+      e.target.value = "";
+    });
+
+    document.getElementById("cancelBtn").addEventListener("click", closeSheet);
+    document.getElementById("saveBtn").addEventListener("click", function () {
+      var data = readForm(RELATORIO_FIELDS);
+      if (!data.titulo) {
+        showToast("Preencha ao menos o título do relatório.");
+        return;
+      }
+      data.fotos = fotos;
+      if (rec) {
+        Object.assign(rec, data);
+      } else {
+        data.id = uid();
+        state.relatorios.unshift(data);
+      }
+      saveState();
+      closeSheet();
+      render();
+    });
+    var delBtn = document.getElementById("deleteBtn");
+    if (delBtn) {
+      delBtn.addEventListener("click", function () {
+        showConfirm("Excluir este relatório? Essa ação não pode ser desfeita.", "Excluir", function () {
+          state.relatorios = state.relatorios.filter(function (r) { return r.id !== rec.id; });
+          saveState();
+          closeSheet();
+          render();
+        });
+      });
+    }
+    openSheet();
+  }
+
   // ---------- Consultores ----------
   function filteredConsultores() {
     return state.consultores.filter(function (r) {
@@ -1410,7 +2863,7 @@
       field({ name: "telefone", label: "Telefone", type: "tel", inputmode: "tel", value: r.telefone }),
       field({ name: "email", label: "E-mail", type: "email", value: r.email })
     );
-    html += field({ name: "gps", label: "Coordenadas GPS", value: r.gps });
+    html += field({ name: "gps", label: "Coordenadas GPS", value: r.gps }) + gpsButtonHtml("f_gps");
     html += fieldRow(
       field({ name: "status", label: "Status", type: "select", options: STATUS_LIST, value: r.status || "Prospecção" }),
       field({ name: "prioridade", label: "Prioridade", type: "select", options: PRIORIDADES, value: r.prioridade || "Não Priorizado" })
@@ -1421,12 +2874,12 @@
     );
     html += field({ name: "mes", label: "Mês previsto", type: "list", options: ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"], value: r.mes });
     html += fieldRow(
-      field({ name: "areaTotal", label: "Área total (ha)", type: "number", inputmode: "decimal", value: r.areaTotal }),
-      field({ name: "areaIrrigada", label: "Área irrigada (ha)", type: "number", inputmode: "decimal", value: r.areaIrrigada })
+      field({ name: "areaTotal", label: "Área total (ha)", type: "text", inputmode: "decimal", value: r.areaTotal }),
+      field({ name: "areaIrrigada", label: "Área irrigada (ha)", type: "text", inputmode: "decimal", value: r.areaIrrigada })
     );
     html += fieldRow(
-      field({ name: "areaTeste", label: "Área teste (ha)", type: "number", inputmode: "decimal", value: r.areaTeste }),
-      field({ name: "volume", label: "Volume esperado (L)", type: "number", inputmode: "decimal", value: r.volume })
+      field({ name: "areaTeste", label: "Área teste (ha)", type: "text", inputmode: "decimal", value: r.areaTeste }),
+      field({ name: "volume", label: "Volume esperado (L)", type: "text", inputmode: "decimal", value: r.volume })
     );
     html += field({ name: "links", label: "Link (planilha, PPT, fotos...)", value: r.links });
     html += field({ name: "obs", label: "Observações", type: "textarea", value: r.obs });
@@ -1440,6 +2893,7 @@
     }
 
     el.sheetContent.innerHTML = html;
+    bindGpsButtons(el.sheetContent);
     document.getElementById("cancelBtn").addEventListener("click", closeSheet);
     document.getElementById("saveBtn").addEventListener("click", function () {
       var data = readForm(PROSPECT_FIELDS);
@@ -1494,11 +2948,19 @@
       return '<div class="detail-row"><span class="k">' + esc(pair[0]) + '</span><span class="v">' + esc(pair[1]) + "</span></div>";
     }).join("") + "</div>";
     if (r.obs) html += '<div class="obs-block">' + esc(r.obs) + "</div>";
+
+    var relatoriosCliente = state.relatorios.filter(function (x) { return x.clienteId === r.id; });
+    if (relatoriosCliente.length) {
+      html += '<div class="btn-row"><button class="btn btn-block" id="pdfBtn">📄 Relatório de visitas em PDF (' + relatoriosCliente.length + ")</button></div>";
+    }
+
     html += '<div class="btn-row"><button class="btn btn-block" id="closeBtn">Fechar</button><button class="btn btn-primary btn-block" id="editBtn">Editar</button></div>';
 
     el.sheetContent.innerHTML = html;
     document.getElementById("closeBtn").addEventListener("click", closeSheet);
     document.getElementById("editBtn").addEventListener("click", function () { openProspectForm(r); });
+    var pdfBtn = document.getElementById("pdfBtn");
+    if (pdfBtn) pdfBtn.addEventListener("click", function () { exportarRelatoriosClientePdf(r); });
     openSheet();
   }
 
@@ -1720,6 +3182,10 @@
         showConfirm("Importar este backup vai substituir os dados atuais deste aparelho. Continuar?", "Importar", function () {
           if (!Array.isArray(data.painelStatusFilter)) data.painelStatusFilter = STATUS_LIST.slice();
           if (!Array.isArray(data.agendas)) data.agendas = [];
+          if (!Array.isArray(data.produtos)) data.produtos = [];
+          if (!Array.isArray(data.amostras)) data.amostras = [];
+          if (!data.adubacaoCalc || typeof data.adubacaoCalc !== "object") data.adubacaoCalc = {};
+          if (!Array.isArray(data.relatorios)) data.relatorios = [];
           state = data;
           saveState();
           closeSheet();
